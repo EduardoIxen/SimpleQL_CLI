@@ -1,3 +1,4 @@
+from RegistroSet import *
 class ControladorEntrada:
     def createSet(self, nombreSet):
-        nombreSet = []
+        RegistroSet.registros[nombreSet] = []

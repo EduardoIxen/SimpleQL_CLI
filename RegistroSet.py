@@ -1,2 +1,2 @@
 class RegistroSet:
-    registros = []
+    registros = {}
