@@ -1,2 +1,3 @@
 class RegistroSet:
     registros = {}
+    listaEnUso = []

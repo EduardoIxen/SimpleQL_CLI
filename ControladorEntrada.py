@@ -6,13 +6,16 @@ class ControladorEntrada:
 
     def loadInto(self, espacioSelf, listaArchivo):
         print(espacioSelf)
-        cargar = CargarArchivo()
-        for archivo in listaArchivo:
-            contenido = cargar.cargarArchivo(archivo)
-            if contenido != None:
-                print(contenido)
-                convStr = "".join(contenido)
-                self.readAon(convStr, espacioSelf)
+        if RegistroSet.registros.get(espacioSelf) != None:
+            cargar = CargarArchivo()
+            for archivo in listaArchivo:
+                contenido = cargar.cargarArchivo(archivo)
+                if contenido != None:
+                    print(contenido)
+                    convStr = "".join(contenido)
+                    self.readAon(convStr, espacioSelf)
+        else:
+            print(f"El SELF {espacioSelf} no existe")
 
     def readAon(self, entrada, espacioSelf):
         dicDatos = {}
@@ -128,3 +131,13 @@ class ControladorEntrada:
                     estado = 1
                     #RegistroSet.registros.get(espacioSelf).append(dicDatos)
                     #print(", ---- token coma")
+
+    def useSet(self, nombreSet):
+        RegistroSet.listaEnUso = []
+        if RegistroSet.registros.get(nombreSet) != None:
+            RegistroSet.listaEnUso = RegistroSet.registros.get(nombreSet)
+            print("lista en uso")
+            print(RegistroSet.listaEnUso)
+            print("fin lista en uso")
+        else:
+            print(f"El SELF {nombreSet} no existe")

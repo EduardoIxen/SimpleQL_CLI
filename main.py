@@ -20,6 +20,7 @@ while True:
     palabraCuartoNivel = ""
     palabraQuintoNivel = ""
     contadorAtributos = 0
+    aceptado = False
     for i in range(len(opcion)):
         if estado == 0:
             if opcion[i].isalpha() or opcion[i] == " ":
@@ -29,37 +30,37 @@ while True:
                 elif palabraReservada.upper() == "LOAD":
                     print("LOAD")
                     estado = 2
-                elif palabraReservada == "USE":
+                elif palabraReservada.upper() == "USE":
                     print("USE")
-                    estado = 1
-                elif palabraReservada == "SELECT":
+                    estado = 3
+                elif palabraReservada.upper() == "SELECT":
                     print("SELECT")
                     estado = 1
-                elif palabraReservada == "SELECCIONAR":
+                elif palabraReservada.upper() == "SELECCIONAR":
                     print("SELECCIONAR")
                     estado = 1
-                elif palabraReservada == "LIST":
+                elif palabraReservada.upper() == "LIST":
                     print("LIST")
                     estado = 1
-                elif palabraReservada == "PRINT":
+                elif palabraReservada.upper() == "PRINT":
                     print("PRINT")
                     estado = 1
-                elif palabraReservada == "MAX":
+                elif palabraReservada.upper() == "MAX":
                     print("MAX")
                     estado = 1
-                elif palabraReservada == "MIN":
+                elif palabraReservada.upper() == "MIN":
                     print("MIN")
                     estado = 1
-                elif palabraReservada == "SUM":
+                elif palabraReservada.upper() == "SUM":
                     print("SUM")
                     estado = 1
-                elif palabraReservada == "COUNT":
+                elif palabraReservada.upper() == "COUNT":
                     print("COUNT")
                     estado = 1
-                elif palabraReservada == "REPORT":
+                elif palabraReservada.upper() == "REPORT":
                     print("REPORT")
                     estado = 1
-                elif palabraReservada == "SCRIPT":
+                elif palabraReservada.upper() == "SCRIPT":
                     print("SCRIPT")
                     estado = 1
         elif estado == 1:
@@ -72,6 +73,11 @@ while True:
                 palabraSegundoNivel = palabraSegundoNivel + opcion[i]
                 if palabraSegundoNivel.upper() == "INTO":
                     estado = 15
+        elif estado == 3:
+            if opcion[i].isalpha():
+                palabraSegundoNivel = palabraSegundoNivel + opcion[i]
+                if palabraSegundoNivel.upper() == "SET":
+                    estado = 18
         elif estado == 14:
             if i <= len(opcion):
                 if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_":
@@ -85,6 +91,7 @@ while True:
                         palabraReservada = ""
                         palabraSegundoNivel = ""
                         palabraTercerNivel = ""
+                        aceptado = True
         elif estado == 15:
             registro = RegistroSet.registros
             if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_":
@@ -112,9 +119,21 @@ while True:
                     ctrl = ControladorEntrada()
                     ctrl.loadInto(palabraTercerNivel, listaAtributos)
                     listaAtributos = []
+                    aceptado = True
                 else:
                     palabraQuintoNivel = palabraQuintoNivel + opcion[i]
             elif opcion[i] == ",":
                 print("comaaaa")
                 listaAtributos.append(palabraQuintoNivel)
                 palabraQuintoNivel = ""
+        elif estado == 18:
+            if i <= len(opcion):
+                if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_":
+                    palabraTercerNivel = palabraTercerNivel + opcion[i]
+                    if i == len(opcion) - 1:
+                        print(palabraReservada + " " + palabraSegundoNivel + " " + palabraTercerNivel)
+                        use = ControladorEntrada()
+                        use.useSet(palabraTercerNivel)
+                        aceptado = True
+    if aceptado == False:
+        print("ERROR// COMANDO INVALIDO")
