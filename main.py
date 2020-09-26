@@ -111,6 +111,7 @@ while True:
                         print("Imprimiendo lista final " + atributo)
                     ctrl = ControladorEntrada()
                     ctrl.loadInto(palabraTercerNivel, listaAtributos)
+                    listaAtributos = []
                 else:
                     palabraQuintoNivel = palabraQuintoNivel + opcion[i]
             elif opcion[i] == ",":
