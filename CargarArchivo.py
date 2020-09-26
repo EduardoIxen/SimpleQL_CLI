@@ -8,4 +8,5 @@ class CargarArchivo:
             fichero.close()
             return contenido
         else:
+            print(f"El archivo {nombreArchivo} no existe.")
             return None

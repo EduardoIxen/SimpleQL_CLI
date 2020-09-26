@@ -10,19 +10,23 @@ from ControladorEntrada import *
 #     print(cadena)
 # else:
 #     print(f"El archivo {nombreArchivo} no existe")
+listaAtributos = []
 while True:
     opcion = input("Ingrese el comando\n")
     estado = 0
     palabraReservada = ""
     palabraSegundoNivel = ""
     palabraTercerNivel = ""
+    palabraCuartoNivel = ""
+    palabraQuintoNivel = ""
+    contadorAtributos = 0
     for i in range(len(opcion)):
         if estado == 0:
             if opcion[i].isalpha() or opcion[i] == " ":
                 palabraReservada = palabraReservada + opcion[i]
                 if palabraReservada.upper() == "CREATE":
                     estado = 1
-                elif palabraReservada == "LOAD":
+                elif palabraReservada.upper() == "LOAD":
                     print("LOAD")
                     estado = 2
                 elif palabraReservada == "USE":
@@ -63,9 +67,14 @@ while True:
                 palabraSegundoNivel = palabraSegundoNivel + opcion[i]
                 if palabraSegundoNivel.upper() == "SET":
                     estado = 14
+        elif estado == 2:
+            if opcion[i].isalpha():
+                palabraSegundoNivel = palabraSegundoNivel + opcion[i]
+                if palabraSegundoNivel.upper() == "INTO":
+                    estado = 15
         elif estado == 14:
             if i <= len(opcion):
-                if opcion[i].isalpha() or opcion[i].isdigit():
+                if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_":
                     palabraTercerNivel = palabraTercerNivel + opcion[i]
                     if i == len(opcion) - 1:
                         print(palabraReservada + " " + palabraSegundoNivel + " " + palabraTercerNivel)
@@ -73,3 +82,38 @@ while True:
                         create.createSet(palabraTercerNivel)
                         items = RegistroSet.registros.items()
                         print(items)
+                        palabraReservada = ""
+                        palabraSegundoNivel = ""
+                        palabraTercerNivel = ""
+        elif estado == 15:
+            registro = RegistroSet.registros
+            if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_":
+                palabraTercerNivel = palabraTercerNivel + opcion[i]
+            elif opcion[i] == " ":
+                contadorAtributos = contadorAtributos + 1
+                if contadorAtributos == 2:
+                    print(palabraTercerNivel)
+                    estado = 16
+        elif estado == 16:
+            if opcion[i].isalpha():
+                palabraCuartoNivel = palabraCuartoNivel + opcion[i]
+            elif opcion[i] == " ":
+                if palabraCuartoNivel.upper() == "FILES":
+                    estado = 17
+        elif estado == 17: #obtener archivos a cargar por separado
+            if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_" or opcion[i] == ".":
+                if i == len(opcion) - 1:
+                    palabraQuintoNivel = palabraQuintoNivel + opcion[i]
+                    print("Finaaal")
+                    listaAtributos.append(palabraQuintoNivel)
+                    palabraQuintoNivel = ""
+                    for atributo in listaAtributos:
+                        print("Imprimiendo lista final " + atributo)
+                    ctrl = ControladorEntrada()
+                    ctrl.loadInto(palabraTercerNivel, listaAtributos)
+                else:
+                    palabraQuintoNivel = palabraQuintoNivel + opcion[i]
+            elif opcion[i] == ",":
+                print("comaaaa")
+                listaAtributos.append(palabraQuintoNivel)
+                palabraQuintoNivel = ""

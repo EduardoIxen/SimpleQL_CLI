@@ -1,0 +1,17 @@
+(
+    <
+        [atributo_numerico2] = 45.09,
+        [atributo_cadena2] = "hola mundo",
+        [atributo_booleano2] = true
+    >,
+    <
+        [atributo_numerico2] = 4,
+        [atributo_cadena2] = "adios mundo",
+        [atributo_booleano2] = false
+    >,
+    <
+        [atributo_numerico2] = -56.4,
+        [atributo_cadena2] = "este es otro ejemplo, las cadenas pueden ser muy largas",
+        [atributo_booleano2] = false
+    >
+)
