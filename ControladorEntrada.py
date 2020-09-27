@@ -5,13 +5,13 @@ class ControladorEntrada:
         RegistroSet.registros[nombreSet] = []
 
     def loadInto(self, espacioSelf, listaArchivo):
-        print(espacioSelf)
+        #print(espacioSelf)
         if RegistroSet.registros.get(espacioSelf) != None:
             cargar = CargarArchivo()
             for archivo in listaArchivo:
                 contenido = cargar.cargarArchivo(archivo)
                 if contenido != None:
-                    print(contenido)
+                    #print(contenido)
                     convStr = "".join(contenido)
                     self.readAon(convStr, espacioSelf)
         else:
@@ -124,9 +124,10 @@ class ControladorEntrada:
 
                 if entrada[i] == ")":
                     #print(") ---- token parentesis cerrado")
-                    print("inicio")
-                    print(RegistroSet.registros.get(espacioSelf))
-                    print("final")
+                    #print("inicio")
+                    #print(RegistroSet.registros.get(espacioSelf))
+                    #print("final")
+                    print("")
                 elif entrada[i] == ",":
                     estado = 1
                     #RegistroSet.registros.get(espacioSelf).append(dicDatos)
@@ -136,8 +137,17 @@ class ControladorEntrada:
         RegistroSet.listaEnUso = []
         if RegistroSet.registros.get(nombreSet) != None:
             RegistroSet.listaEnUso = RegistroSet.registros.get(nombreSet)
-            print("lista en uso")
-            print(RegistroSet.listaEnUso)
-            print("fin lista en uso")
+            print(f"SET ---{nombreSet}--- EN USO!!!")
+            #print("lista en uso")
+            #print(RegistroSet.listaEnUso)
+            #print("fin lista en uso")
         else:
             print(f"El SELF {nombreSet} no existe")
+
+    def selectSimple(self, listaAtributos, atributoComp, valorAtribComp):
+        temp = RegistroSet.listaEnUso
+        for registro in temp:
+            for atrib in listaAtributos:
+                if registro.get(atributoComp) == valorAtribComp:
+                    print(f"{atrib} : {registro.get(atrib)}")
+            print("///////////////////////////////////////////////////////////////////////")
