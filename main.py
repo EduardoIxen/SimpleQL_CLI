@@ -19,9 +19,13 @@ while True:
     palabraTercerNivel = ""
     palabraCuartoNivel = ""
     palabraQuintoNivel = ""
+    atributoExtendido = ""
+    valAtributoExtendido = ""
+    operacionExtendida = ""
+    contOp = 0
     contadorAtributos = 0
     aceptado = False
-    for i in range(len(opcion)):
+    for i in range(len(opcion.strip())):
         if estado == 0:
             if opcion[i].isalpha() or opcion[i] == " ":
                 palabraReservada = palabraReservada + opcion[i]
@@ -34,8 +38,7 @@ while True:
                 elif palabraReservada.upper() == "SELECT":
                     estado = 4
                 elif palabraReservada.upper() == "SELECCIONAR":
-                    print("SELECCIONAR")
-                    estado = 1
+                    estado = 4
                 elif palabraReservada.upper() == "LIST":
                     print("LIST")
                     estado = 1
@@ -76,7 +79,7 @@ while True:
                 if palabraSegundoNivel.upper() == "SET":
                     estado = 18
         elif estado == 4: #obtener lista de atributos para seleccionar
-            if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_":
+            if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_" or opcion[i] == "*" and i != len(opcion.strip())-1:
                 palabraSegundoNivel = palabraSegundoNivel + opcion[i]
             elif opcion[i] == "," or opcion[i] == " ":
                 if palabraSegundoNivel != "" and palabraSegundoNivel.upper().strip() != "WHERE":
@@ -84,6 +87,15 @@ while True:
                     palabraSegundoNivel = ""
                 if palabraSegundoNivel.upper() == "WHERE":
                     estado = 19
+            elif opcion[i] == "*" and i == len(opcion.strip()) - 1:
+                palabraSegundoNivel = palabraSegundoNivel + opcion[i]
+                listaAtributos.append(palabraSegundoNivel)
+                controlador = ControladorEntrada()
+                controlador.selectAll(listaAtributos)
+                palabraCuartoNivel = ""
+                listaAtributos = []
+                palabraTercerNivel = ""
+                aceptado = True
         elif estado == 14:
             if i <= len(opcion):
                 if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_":
@@ -158,27 +170,35 @@ while True:
                 estado = 22
                 continue
         if estado == 21:
-            if palabraCuartoNivel.upper() == "TRUE":
-                #print("rs true cuarto nivel en estado 21")
-                controlador = ControladorEntrada()
-                controlador.selectSimple(listaAtributos,palabraTercerNivel,True)
-                palabraCuartoNivel = ""
-                listaAtributos = []
-                palabraTercerNivel = ""
-                aceptado = True
-            elif palabraCuartoNivel.upper() == "FALSE":
-                #print("es false cuarto nivel en estado 21")
-                controlador = ControladorEntrada()
-                controlador.selectSimple(listaAtributos, palabraTercerNivel, False)
-                palabraCuartoNivel = ""
-                listaAtributos = []
-                palabraTercerNivel = ""
-                aceptado = True
+            if i == len(opcion.strip())-1:
+                if palabraCuartoNivel.upper() == "TRUE":
+                    #print("rs true cuarto nivel en estado 21")
+                    controlador = ControladorEntrada()
+                    controlador.selectSimple(listaAtributos,palabraTercerNivel,True)
+                    palabraCuartoNivel = ""
+                    listaAtributos = []
+                    palabraTercerNivel = ""
+                    aceptado = True
+                elif palabraCuartoNivel.upper() == "FALSE":
+                    #print("es false cuarto nivel en estado 21")
+                    controlador = ControladorEntrada()
+                    controlador.selectSimple(listaAtributos, palabraTercerNivel, False)
+                    palabraCuartoNivel = ""
+                    listaAtributos = []
+                    palabraTercerNivel = ""
+                    aceptado = True
+            else:
+                if palabraCuartoNivel.upper() == "TRUE":
+                    palabraCuartoNivel = True
+                    estado = 23
+                elif palabraCuartoNivel.upper() == "FALSE":
+                    palabraCuartoNivel = False
+                    estado = 23
 
         elif estado == 22:
             if opcion[i] != '"':
                 palabraCuartoNivel = palabraCuartoNivel + opcion[i]
-            else:
+            elif opcion[i] == '"' and i == len(opcion.strip()) - 1:
                 #print("curto nivel en estado 22",palabraCuartoNivel)
                 controlador = ControladorEntrada()
                 controlador.selectSimple(listaAtributos, palabraTercerNivel, palabraCuartoNivel)
@@ -186,6 +206,15 @@ while True:
                 listaAtributos = []
                 palabraTercerNivel = ""
                 aceptado = True
+            elif opcion[i] == '"' and i != len(opcion.strip()) - 1:
+                estado = 23
+        elif estado == 23:
+            if opcion[i].isalpha():
+                palabraQuintoNivel = palabraQuintoNivel + opcion[i]
+            if palabraQuintoNivel.upper() == "AND" or palabraQuintoNivel.upper() == "OR" or palabraQuintoNivel.upper() == "XOR":
+                estado = 25
+                continue
+
         if estado == 24:
             if opcion[i].isdigit() or opcion[i] == "." or opcion[i] == "+" or opcion[i] == "-":
                 palabraCuartoNivel = palabraCuartoNivel + opcion[i]
@@ -207,6 +236,79 @@ while True:
                         listaAtributos = []
                         palabraTercerNivel = ""
                         aceptado = True
+            elif opcion[i] == " " and i != len(opcion.strip()) - 1:
+                if palabraCuartoNivel.isdigit():
+                    palabraCuartoNivel = int(palabraCuartoNivel)
+                    estado = 23
+                else:
+                    palabraCuartoNivel = float(palabraCuartoNivel)
+                    estado = 23
+
+        elif estado == 25:
+            if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_":
+                atributoExtendido = atributoExtendido + opcion[i]
+            else:
+                if opcion[i] == "<" or opcion[i] == ">" or opcion[i] == "=" or opcion[i] == "!":
+                    operacionExtendida = operacionExtendida + opcion[i]
+                    print("estado25", operacionExtendida)
+                if contOp == 3:
+                    estado = 26
+                    contOp = 0
+                else:
+                    contOp = contOp + 1
+        elif estado == 26:
+            if opcion[i].isdigit() or opcion[i] == "-" or opcion[i] == "+":
+                estado = 29
+            elif opcion[i].isalpha():
+                valAtributoExtendido = valAtributoExtendido + opcion[i]
+                if valAtributoExtendido.upper() == "TRUE" or valAtributoExtendido.upper() == "FALSE":
+                    estado = 27
+            elif opcion[i] == '"':
+                estado = 28
+                continue
+        if estado == 27:
+            if i == len(opcion.strip())-1:
+                if valAtributoExtendido.upper() == "TRUE":
+                    valAtributoExtendido = True
+                    estado = 30
+                elif valAtributoExtendido.upper() == "FALSE":
+                    valAtributoExtendido = False
+                    estado = 30
+
+        elif estado == 28:
+            if opcion[i] != '"':
+                valAtributoExtendido = valAtributoExtendido + opcion[i]
+            elif opcion[i] == '"' and i == len(opcion.strip()) - 1:
+                estado = 30
+                #mandar a otro estado para el controlador
+
+        if estado == 29:
+            if opcion[i].isdigit() or opcion[i] == "." or opcion[i] == "+" or opcion[i] == "-":
+                valAtributoExtendido = valAtributoExtendido + opcion[i]
+                if i == len(opcion.strip()) - 1:
+                    if valAtributoExtendido.isdigit():
+                        valAtributoExtendido = int(valAtributoExtendido)
+                        estado = 30
+                    else:
+                        valAtributoExtendido = float(valAtributoExtendido)
+                        estado = 30
+                        #print("numero recib cuarto nivel en estado 24" + str(mandarNumero))
+
+        if estado == 30:
+            #print(listaAtributos)
+            #print(palabraTercerNivel, palabraCuartoNivel, palabraQuintoNivel, atributoExtendido, operacionExtendida,
+            #      valAtributoExtendido)
+            controladorEx = ControladorEntrada()
+            controladorEx.selectExtend(listaAtributos, palabraTercerNivel, palabraCuartoNivel, palabraQuintoNivel,
+                                       atributoExtendido, operacionExtendida, valAtributoExtendido)
+            listaAtributos = []
+            palabraTercerNivel = ""
+            palabraCuartoNivel = ""
+            palabraQuintoNivel = ""
+            atributoExtendido = ""
+            operacionExtendida = ""
+            valAtributoExtendido = ""
+            aceptado = True
 
     if aceptado == False:
         print("ERROR// COMANDO INVALIDO")
@@ -215,3 +317,5 @@ while True:
         palabraTercerNivel = ""
         palabraCuartoNivel = ""
         palabraQuintoNivel = ""
+
+        #dar formato a los numeros que se manda al metodo ya que todos se mandan como string y eso no se acepta
