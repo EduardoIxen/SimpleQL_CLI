@@ -524,3 +524,36 @@ class ControladorEntrada:
                     for atrib in listaAtributos:
                         print(f"{atrib} : {registro.get(atrib)}")
                     print("///////////////////////////////////////////////////////////////////////")
+
+
+    def listAttributes(self):
+        aux = RegistroSet.listaEnUso
+        for item in aux:
+            keys = item.keys()
+            for key in keys:
+                if type(item.get(key)) == int:
+                    print(f"{key} -- int")
+                elif type(item.get(key)) == str:
+                    print(f"{key} -- string")
+                elif type(item.get(key)) == float:
+                    print(f"{key} -- float")
+                elif type(item.get(key)) == bool:
+                    print(f"{key} -- boolean")
+            print("/////////////////////////////////////////////////////////////////")
+
+    def addColor(self, color):
+        if color == "RED":
+            RegistroSet.color = "\u001b[31m"
+            #RegistroSet.color = "\033[38:5:196m"
+        elif color == "BLUE":
+            RegistroSet.color = "\u001b[34m"
+        elif color == "GREEN":
+            RegistroSet.color = "\033[38:5:28m"
+            #RegistroSet.color = "\u001b[32m"
+        elif color == "YELLOW":
+            RegistroSet.color = "\033[93m"
+        elif color == "ORANGE":
+            #RegistroSet.color = "\033[33m"
+            RegistroSet.color = "\033[38:5:202m"
+        elif color == "PINK":
+            RegistroSet.color = "\033[38;5;201m"

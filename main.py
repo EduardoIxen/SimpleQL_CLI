@@ -40,11 +40,10 @@ while True:
                 elif palabraReservada.upper() == "SELECCIONAR":
                     estado = 4
                 elif palabraReservada.upper() == "LIST":
-                    print("LIST")
-                    estado = 1
+                    estado = 6
+                    continue
                 elif palabraReservada.upper() == "PRINT":
-                    print("PRINT")
-                    estado = 1
+                    estado = 7
                 elif palabraReservada.upper() == "MAX":
                     print("MAX")
                     estado = 1
@@ -96,6 +95,23 @@ while True:
                 listaAtributos = []
                 palabraTercerNivel = ""
                 aceptado = True
+
+        elif estado == 6:
+            if opcion[i].isalpha():
+                palabraSegundoNivel = palabraSegundoNivel + opcion[i]
+                if palabraSegundoNivel.upper() == "ATTRIBUTES":
+                    control = ControladorEntrada()
+                    control.listAttributes()
+                    palabraSegundoNivel = ""
+                    aceptado = True
+
+        elif estado == 7:
+            if opcion[i].isalpha():
+                palabraSegundoNivel = palabraSegundoNivel + opcion[i]
+                if palabraSegundoNivel.upper() == "IN":
+                    estado = 31
+                    continue
+
         elif estado == 14:
             if i <= len(opcion):
                 if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_":
@@ -309,6 +325,15 @@ while True:
             operacionExtendida = ""
             valAtributoExtendido = ""
             aceptado = True
+
+        elif estado == 31:
+            if opcion[i].isalpha():
+                palabraTercerNivel = palabraTercerNivel + opcion[i]
+                if i == len(opcion.strip()) -1:
+                    control = ControladorEntrada()
+                    control.addColor(palabraTercerNivel.upper())
+                    print(f"{RegistroSet.color}",end="")
+                    aceptado = True
 
     if aceptado == False:
         print("ERROR// COMANDO INVALIDO")
