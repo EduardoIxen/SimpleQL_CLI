@@ -7,7 +7,9 @@ class CargarArchivo:
             contenido = fichero.readlines()
             fichero.close()
             print(f"Archivo ---{nombreArchivo}--- cargado correctamente")
+            print("//////////////////////////////////////////////////////////////////////////////////////////////////")
             return contenido
         else:
             print(f"El archivo ---{nombreArchivo}--- no existe.")
+            print("//////////////////////////////////////////////////////////////////////////////////////////////////")
             return None

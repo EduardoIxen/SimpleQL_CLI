@@ -45,17 +45,13 @@ while True:
                 elif palabraReservada.upper() == "PRINT":
                     estado = 7
                 elif palabraReservada.upper() == "MAX":
-                    print("MAX")
-                    estado = 1
+                    estado = 8
                 elif palabraReservada.upper() == "MIN":
-                    print("MIN")
-                    estado = 1
+                    estado = 9
                 elif palabraReservada.upper() == "SUM":
-                    print("SUM")
-                    estado = 1
+                    estado = 10
                 elif palabraReservada.upper() == "COUNT":
-                    print("COUNT")
-                    estado = 1
+                    estado = 11
                 elif palabraReservada.upper() == "REPORT":
                     print("REPORT")
                     estado = 1
@@ -112,6 +108,47 @@ while True:
                     estado = 31
                     continue
 
+        elif estado == 8:
+            if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_":
+                palabraSegundoNivel = palabraSegundoNivel + opcion[i]
+                if i == len(opcion.strip()) - 1:
+                    controlador = ControladorEntrada()
+                    controlador.max(palabraSegundoNivel)
+                    palabraSegundoNivel = ""
+                    aceptado = True
+
+        elif estado == 9:
+            if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_":
+                palabraSegundoNivel = palabraSegundoNivel + opcion[i]
+                if i == len(opcion.strip()) - 1:
+                    controlador = ControladorEntrada()
+                    controlador.min(palabraSegundoNivel)
+                    palabraSegundoNivel = ""
+                    aceptado = True
+
+        elif estado == 10:
+            if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_" or opcion[i] == "*":
+                palabraSegundoNivel = palabraSegundoNivel + opcion[i]
+            if opcion[i] == "," or opcion[i] == " " or i == len(opcion.strip()) - 1:
+                if palabraSegundoNivel != "":
+                    listaAtributos.append(palabraSegundoNivel.strip())
+                    control = ControladorEntrada()
+                    control.sum(listaAtributos)
+                    palabraSegundoNivel = ""
+                    listaAtributos = []
+                    aceptado = True
+
+        elif estado == 11:
+            if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_" or opcion[i] == "*":
+                palabraSegundoNivel = palabraSegundoNivel + opcion[i]
+            if opcion[i] == "," or opcion[i] == " " or i == len(opcion.strip()) - 1:
+                if palabraSegundoNivel != "":
+                    listaAtributos.append(palabraSegundoNivel.strip())
+                    control = ControladorEntrada()
+                    control.count(listaAtributos)
+                    palabraSegundoNivel = ""
+                    listaAtributos = []
+                    aceptado = True
         elif estado == 14:
             if i <= len(opcion):
                 if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_":
@@ -122,6 +159,7 @@ while True:
                         create.createSet(palabraTercerNivel)
                         items = RegistroSet.registros.items()
                         print(f"SET ---{palabraTercerNivel}--- CREADO CORRECTAMENTE")
+                        print("//////////////////////////////////////////////////////////////////////////////////////////////////")
                         #print(items)
                         palabraReservada = ""
                         palabraSegundoNivel = ""
@@ -266,7 +304,6 @@ while True:
             else:
                 if opcion[i] == "<" or opcion[i] == ">" or opcion[i] == "=" or opcion[i] == "!":
                     operacionExtendida = operacionExtendida + opcion[i]
-                    print("estado25", operacionExtendida)
                 if contOp == 3:
                     estado = 26
                     contOp = 0

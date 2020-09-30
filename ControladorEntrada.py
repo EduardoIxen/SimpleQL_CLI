@@ -16,6 +16,7 @@ class ControladorEntrada:
                     self.readAon(convStr, espacioSelf)
         else:
             print(f"El SELF {espacioSelf} no existe")
+            print("//////////////////////////////////////////////////////////////////////////////////////////////////")
 
     def readAon(self, entrada, espacioSelf):
         dicDatos = {}
@@ -138,11 +139,13 @@ class ControladorEntrada:
         if RegistroSet.registros.get(nombreSet) != None:
             RegistroSet.listaEnUso = RegistroSet.registros.get(nombreSet)
             print(f"SET ---{nombreSet}--- EN USO!!!")
+            print("//////////////////////////////////////////////////////////////////////////////////////////////////")
             #print("lista en uso")
             #print(RegistroSet.listaEnUso)
             #print("fin lista en uso")
         else:
             print(f"El SELF {nombreSet} no existe")
+            print("//////////////////////////////////////////////////////////////////////////////////////////////////")
 
     def selectSimple(self, listaAtributos, atributoComp, valorAtribComp):
         temp = RegistroSet.listaEnUso
@@ -150,14 +153,14 @@ class ControladorEntrada:
             for registro in temp:
                 if registro.get(atributoComp) == valorAtribComp:
                     print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
+                    print("//////////////////////////////////////////////////////////////////////////////////////////////////")
 
         else:
             for registro in temp:
                 if registro.get(atributoComp) == valorAtribComp:
                     for atrib in listaAtributos:
                             print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
+                    print("//////////////////////////////////////////////////////////////////////////////////////////////////")
 
     def selectAll(self, listaAtributos):
         temp = RegistroSet.listaEnUso
@@ -539,7 +542,7 @@ class ControladorEntrada:
                     print(f"{key} -- float")
                 elif type(item.get(key)) == bool:
                     print(f"{key} -- boolean")
-            print("/////////////////////////////////////////////////////////////////")
+            print("//////////////////////////////////////////////////////////////////////////////////////////////////")
 
     def addColor(self, color):
         if color == "RED":
@@ -557,3 +560,97 @@ class ControladorEntrada:
             RegistroSet.color = "\033[38:5:202m"
         elif color == "PINK":
             RegistroSet.color = "\033[38;5;201m"
+
+    def max(self, atributo):
+        temp = RegistroSet.listaEnUso
+        listaElementosNum = []
+        if temp[0].get(atributo) is not None and temp[1].get(atributo) is not None:
+            for item in temp:
+                if item.get(atributo) != "null" or item.get(atributo) != "NULL" or item.get(atributo) != "Null" or \
+                        item.get(atributo) is not None:
+                    if type(item.get(atributo)) == int or type(item.get(atributo)) == float:
+                        listaElementosNum.append(item.get(atributo))
+                    elif type(item.get(atributo)) == str:
+                            listaElementosNum.append(item.get(atributo))
+                    elif type(item.get(atributo)) == bool:
+                        print("-----------------------No se le puede aplicar el maximo-----------------")
+                        break
+            if listaElementosNum != []:
+                print(f"El valor maximo de {atributo} es: {max(listaElementosNum)}")
+
+        else:
+            print(f"El atributo {atributo} no existe.")
+        print("//////////////////////////////////////////////////////////////////////////////////////////////////")
+
+    def min(self, atributo):
+        temp = RegistroSet.listaEnUso
+        listaElementosNum = []
+        if temp[0].get(atributo) is not None and temp[1].get(atributo) is not None:
+            for item in temp:
+                if item.get(atributo) != "null" or item.get(atributo) != "NULL" or item.get(atributo) != "Null" or \
+                        item.get(atributo) is not None:
+                    if type(item.get(atributo)) == int or type(item.get(atributo)) == float:
+                        listaElementosNum.append(item.get(atributo))
+                    elif type(item.get(atributo)) == str:
+                        listaElementosNum.append(item.get(atributo))
+                    elif type(item.get(atributo)) == bool:
+                        print("-----------------------No se le puede aplicar el minimo-----------------")
+                        break
+            if listaElementosNum != []:
+                print(f"El valor minimo de {atributo} es: {min(listaElementosNum)}")
+        else:
+            print(f"El atributo {atributo} no existe.")
+        print("//////////////////////////////////////////////////////////////////////////////////////////////////")
+
+    def sum(self, listaAtributos):
+        temp = RegistroSet.listaEnUso
+        listaSum = []
+        if listaAtributos[0] == "*":
+            atributos = temp[0].keys()
+            for key in atributos:
+                for item in temp:
+                    if type(item.get(key)) == int or type(item.get(key)) == float:
+                        listaSum.append(item.get(key))
+                if listaSum != []:
+                    print(f"La suma de {key} es: {sum(listaSum)}")
+                    listaSum = []
+        else:
+            for atrib in listaAtributos:
+                for item in temp:
+                    if type(item.get(atrib)) == int or type(item.get(atrib)) == float:
+                        listaSum.append(item.get(atrib))
+                print(f"La suma de {atrib} es: {sum(listaSum)}")
+        print("//////////////////////////////////////////////////////////////////////////////////////////////////")
+
+    def count(self, listaAtributos):
+        temp = RegistroSet.listaEnUso
+        atributos = temp[0].keys()
+        contador = 0
+        if listaAtributos[0] == "*":
+            for item in temp:
+                contador = contador + 1
+            print(f"Se cargaron {contador} registros.")
+            contador = 0
+            for atrib in atributos:
+                for item in temp:
+                    if item.get(atrib) is not None or item.get(atrib) != "Null" or item.get(atrib) != "NULL" or\
+                            item.get(atrib) != "null":
+                        contador = contador + 1
+                    else:
+                        print(f"{atrib} no existe")
+                print(f"{atrib}: {contador}")
+                contador = 0
+        else:
+            for atrib in listaAtributos:
+                for item in temp:
+                    if atrib in item:
+                        if item.get(atrib) != "Null" or item.get(atrib) != "NULL" or item.get(atrib) != "null" or \
+                                item.get(atrib) is not None:
+                            contador = contador + 1
+                    else:
+                        print(f"{atrib} no existe")
+                        contador = 0
+                        break
+                print(f"{atrib}: {contador} registros guardados")
+                contador = 0
+        print("//////////////////////////////////////////////////////////////////////////////////////////////////")
