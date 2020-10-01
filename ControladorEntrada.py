@@ -1,5 +1,7 @@
 from CargarArchivo import *
 from RegistroSet import *
+from Reporte import  *
+
 class ControladorEntrada:
     def createSet(self, nombreSet):
         RegistroSet.registros[nombreSet] = []
@@ -148,6 +150,8 @@ class ControladorEntrada:
             print("//////////////////////////////////////////////////////////////////////////////////////////////////")
 
     def selectSimple(self, listaAtributos, atributoComp, operacion,valorAtribComp):
+        listaReporte = []
+        dicReporte = {}
         print("##########################################SELECT SIMPLE###########################################")
         temp = RegistroSet.listaEnUso
         if operacion == "=":
@@ -155,105 +159,168 @@ class ControladorEntrada:
                 for registro in temp:
                     if registro.get(atributoComp) == valorAtribComp:
                         print(registro)
+                        listaReporte.append(registro)
                         print(
                             "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                if RegistroSet.reporte == True:
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
 
             else:
                 for registro in temp:
                     if registro.get(atributoComp) == valorAtribComp:
                         for atrib in listaAtributos:
                             print(f"{atrib} : {registro.get(atrib)}")
+                            dicReporte[atrib] = registro.get(atrib)
                         print(
                             "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                if RegistroSet.reporte == True:
+                    listaReporte.append(dicReporte)
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
 
         elif operacion == "!=":
             if listaAtributos[0] == "*":
                 for registro in temp:
                     if registro.get(atributoComp) != valorAtribComp:
                         print(registro)
+                        listaReporte.append(registro)
                         print(
                             "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                if RegistroSet.reporte == True:
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
 
             else:
                 for registro in temp:
                     if registro.get(atributoComp) != valorAtribComp:
                         for atrib in listaAtributos:
                             print(f"{atrib} : {registro.get(atrib)}")
+                            dicReporte[atrib] = registro.get(atrib)
                         print(
                             "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                if RegistroSet.reporte == True:
+                    listaReporte.append(dicReporte)
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
 
         elif operacion == "<":
             if listaAtributos[0] == "*":
                 for registro in temp:
                     if registro.get(atributoComp) < valorAtribComp:
                         print(registro)
+                        listaReporte.append(registro)
                         print(
                             "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                if RegistroSet.reporte == True:
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
 
             else:
                 for registro in temp:
                     if registro.get(atributoComp) < valorAtribComp:
                         for atrib in listaAtributos:
                             print(f"{atrib} : {registro.get(atrib)}")
+                            dicReporte[atrib] = registro.get(atrib)
                         print(
-                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                                "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                    if RegistroSet.reporte == True:
+                        listaReporte.append(dicReporte)
+                        reporte = Reporte()
+                        reporte.crearHtml(listaReporte)
 
         elif operacion == "<=":
             if listaAtributos[0] == "*":
                 for registro in temp:
                     if registro.get(atributoComp) <= valorAtribComp:
                         print(registro)
+                        listaReporte.append(registro)
                         print(
                             "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                if RegistroSet.reporte == True:
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
 
             else:
                 for registro in temp:
                     if registro.get(atributoComp) <= valorAtribComp:
                         for atrib in listaAtributos:
                             print(f"{atrib} : {registro.get(atrib)}")
+                            dicReporte[atrib] = registro.get(atrib)
                         print(
                             "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                if RegistroSet.reporte == True:
+                    listaReporte.append(dicReporte)
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
 
         elif operacion == ">":
             if listaAtributos[0] == "*":
                 for registro in temp:
                     if registro.get(atributoComp) > valorAtribComp:
                         print(registro)
+                        listaReporte.append(registro)
                         print(
                             "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                if RegistroSet.reporte == True:
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
 
             else:
                 for registro in temp:
                     if registro.get(atributoComp) > valorAtribComp:
                         for atrib in listaAtributos:
                             print(f"{atrib} : {registro.get(atrib)}")
+                            dicReporte[atrib] = registro.get(atrib)
                         print(
                             "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                if RegistroSet.reporte == True:
+                    listaReporte.append(dicReporte)
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
 
         elif operacion == ">=":
             if listaAtributos[0] == "*":
                 for registro in temp:
                     if registro.get(atributoComp) >= valorAtribComp:
                         print(registro)
+                        listaReporte.append(registro)
                         print(
                             "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                if RegistroSet.reporte == True:
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
 
             else:
                 for registro in temp:
                     if registro.get(atributoComp) >= valorAtribComp:
                         for atrib in listaAtributos:
                             print(f"{atrib} : {registro.get(atrib)}")
-                        print("//////////////////////////////////////////////////////////////////////////////////////////////////")
+                            dicReporte[atrib] = registro.get(atrib)
+                        print(
+                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                if RegistroSet.reporte == True:
+                    listaReporte.append(dicReporte)
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
 
     def selectAll(self, listaAtributos):
+        listaReporte = []
         print("##########################################SELECT ALL###########################################")
         temp = RegistroSet.listaEnUso
         if listaAtributos[0] == "*":
             for registro in temp:
                 print(registro)
-                print("///////////////////////////////////////////////////////////////////////")
+                listaReporte.append(registro)
+                print(
+                    "//////////////////////////////////////////////////////////////////////////////////////////////////")
+            if RegistroSet.reporte == True:
+                reporte = Reporte()
+                reporte.crearHtml(listaReporte)
 
     def selectExtend(self, listaAtributos, atributoComp, primeraOperacion, valorAtribComp, operacionExt, atribEx, operador, valorAtribEx):
+        listaReporte = []
+        dicReporte = {}
         print("##########################################SELECT EXTEND###########################################")
         temp = RegistroSet.firtsComp
         temp2 = RegistroSet.secondComp
@@ -265,20 +332,29 @@ class ControladorEntrada:
                     for repetido in temp2:
                         if registro == repetido:
                             print(registro)
+                            listaReporte.append(registro)
                 RegistroSet.firtsComp = []
                 RegistroSet.secondComp = []
                 print(
                     "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                if RegistroSet.reporte == True:
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
             else:
                 for registro in temp:
                     for repetido in temp2:
                         if registro == repetido:
                             for atrib in listaAtributos:
-                                print(f"{atribEx}: {registro.get(atrib)}")
+                                print(f"{atrib}: {registro.get(atrib)}")
+                                dicReporte[atrib] = registro.get(atrib)
                 RegistroSet.firtsComp = []
                 RegistroSet.secondComp = []
                 print(
                     "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                if RegistroSet.reporte == True:
+                    listaReporte.append(dicReporte)
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
 
         elif operacionExt == "OR":
             resultado = []
@@ -295,12 +371,14 @@ class ControladorEntrada:
                 #print(resultado)
                 for item in resultado:
                     print(item)
+                    listaReporte.append(item)
                     print(
                     "//////////////////////////////////////////////////////////////////////////////////////////////////")
                 RegistroSet.firtsComp = []
                 RegistroSet.secondComp = []
-                resultado = []
-                sumaLista = []
+                if RegistroSet.reporte == True:
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
             else:
                 for item in temp:
                     sumaLista.append(item)
@@ -313,12 +391,15 @@ class ControladorEntrada:
                 for item in resultado:
                     for atrib in listaAtributos:
                         print(f"{atrib}: {item.get(atrib)}")
+                        dicReporte[atrib] = item.get(atrib)
                     print(
                     "//////////////////////////////////////////////////////////////////////////////////////////////////")
                 RegistroSet.firtsComp = []
                 RegistroSet.secondComp = []
-                resultado = []
-                sumaLista = []
+                if RegistroSet.reporte == True:
+                    listaReporte.append(dicReporte)
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
 
         elif operacionExt == "XOR":
             resultado = []
@@ -331,10 +412,14 @@ class ControladorEntrada:
                         resultado.append(item2)
                 for reg in resultado:
                     print(reg)
+                    listaReporte.append(reg)
                     print(
                         "//////////////////////////////////////////////////////////////////////////////////////////////////")
-                    RegistroSet.firtsComp = []
-                    RegistroSet.secondComp = []
+                RegistroSet.firtsComp = []
+                RegistroSet.secondComp = []
+                if RegistroSet.reporte == True:
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
             else:
                 for item in temp:
                     if item not in temp2:
@@ -345,11 +430,15 @@ class ControladorEntrada:
                 for reg in resultado:
                     for atrib in listaAtributos:
                         print(f"{atrib}: {reg.get(atrib)}")
+                        dicReporte[atrib] = reg.get(atrib)
                         print(
                         "//////////////////////////////////////////////////////////////////////////////////////////////////")
-                        RegistroSet.firtsComp = []
-                        RegistroSet.secondComp = []
-
+                RegistroSet.firtsComp = []
+                RegistroSet.secondComp = []
+                if RegistroSet.reporte == True:
+                    listaReporte.append(dicReporte)
+                    reporte = Reporte()
+                    reporte.crearHtml(listaReporte)
 
     def firstComp(self, atributoComp, primeraOperacion, valorAtributoComp):
         temp = RegistroSet.listaEnUso
@@ -419,6 +508,8 @@ class ControladorEntrada:
                     #print("Second Comp", RegistroSet.secondComp)
 
     def listAttributes(self):
+        listaReporte = []
+        dicReporte = {}
         print("##########################################LIST ATTRIBUTES###########################################")
         aux = RegistroSet.listaEnUso
         for item in aux:
@@ -426,13 +517,36 @@ class ControladorEntrada:
             for key in keys:
                 if type(item.get(key)) == int:
                     print(f"{key} -- int")
+                    dicReporte["Nombre Atribuo"] = str(key)
+                    dicReporte["Tipo"] = "int"
+                    listaReporte.append(dicReporte)
+                    dicReporte = {}
                 elif type(item.get(key)) == str:
                     print(f"{key} -- string")
+                    dicReporte["Nombre Atribuo"] = str(key)
+                    dicReporte["Tipo"] = "String"
+                    listaReporte.append(dicReporte)
+                    dicReporte = {}
                 elif type(item.get(key)) == float:
                     print(f"{key} -- float")
+                    dicReporte["Nombre Atribuo"] = str(key)
+                    dicReporte["Tipo"] = "float"
+                    listaReporte.append(dicReporte)
+                    dicReporte = {}
                 elif type(item.get(key)) == bool:
                     print(f"{key} -- boolean")
+                    dicReporte["Nombre Atribuo"] = str(key)
+                    dicReporte["Tipo"] = "bool"
+                    listaReporte.append(dicReporte)
+                    dicReporte = {}
+            dicReporte["Nombre Atribuo"] = " "
+            dicReporte["Tipo"] = " "
+            listaReporte.append(dicReporte)
+            dicReporte = {}
             print("//////////////////////////////////////////////////////////////////////////////////////////////////")
+        if RegistroSet.reporte == True:
+            reporte = Reporte()
+            reporte.crearHtml(listaReporte)
 
     def addColor(self, color):
         print("##########################################ADD COLOR###########################################")

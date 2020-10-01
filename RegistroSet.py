@@ -4,3 +4,5 @@ class RegistroSet:
     color = ""
     firtsComp = []
     secondComp = []
+    reporte = False
+    nombreReporte = ""
