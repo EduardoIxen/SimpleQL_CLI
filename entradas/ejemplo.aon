@@ -1,6 +1,6 @@
 (
     <
-        [atributo_numerico] = 45.09,
+        [atributo_numerico] = 45.7,
         [as] = 2,
         [atributo_cadena] = "hola mundo",
         [atributo_booleano] = true

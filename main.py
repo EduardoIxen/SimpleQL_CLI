@@ -22,6 +22,7 @@ while True:
     atributoExtendido = ""
     valAtributoExtendido = ""
     operacionExtendida = ""
+    operacion = ""
     contOp = 0
     contadorAtributos = 0
     aceptado = False
@@ -208,11 +209,19 @@ while True:
                         use.useSet(palabraTercerNivel)
                         aceptado = True
         elif estado == 19:
-            if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] =="_":
+            if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_":
                 palabraTercerNivel = palabraTercerNivel + opcion[i]
-            elif opcion[i] == "=":
-                #print(f"esta es la palabra en el etados 19:{palabraTercerNivel}--")
-                estado = 20
+            else:
+                if opcion[i] == "<" or opcion[i] == ">" or opcion[i] == "=" or opcion[i] == "!":
+                    operacion = operacion + opcion[i]
+                    #print(operacion)
+                if contOp == 2:
+                    #print(f"{operacion} operacion de primera condicion")
+                    estado = 20
+                    contOp = 0
+                else:
+                    contOp = contOp + 1
+
         elif estado == 20:
             if opcion[i].isdigit() or opcion[i] == "-" or opcion[i] == "+":
                 estado = 24
@@ -228,18 +237,20 @@ while True:
                 if palabraCuartoNivel.upper() == "TRUE":
                     #print("rs true cuarto nivel en estado 21")
                     controlador = ControladorEntrada()
-                    controlador.selectSimple(listaAtributos,palabraTercerNivel,True)
+                    controlador.selectSimple(listaAtributos, palabraTercerNivel, operacion, True)
                     palabraCuartoNivel = ""
                     listaAtributos = []
                     palabraTercerNivel = ""
+                    operacion = ""
                     aceptado = True
                 elif palabraCuartoNivel.upper() == "FALSE":
                     #print("es false cuarto nivel en estado 21")
                     controlador = ControladorEntrada()
-                    controlador.selectSimple(listaAtributos, palabraTercerNivel, False)
+                    controlador.selectSimple(listaAtributos, palabraTercerNivel, operacion,False)
                     palabraCuartoNivel = ""
                     listaAtributos = []
                     palabraTercerNivel = ""
+                    operacion = ""
                     aceptado = True
             else:
                 if palabraCuartoNivel.upper() == "TRUE":
@@ -255,10 +266,11 @@ while True:
             elif opcion[i] == '"' and i == len(opcion.strip()) - 1:
                 #print("curto nivel en estado 22",palabraCuartoNivel)
                 controlador = ControladorEntrada()
-                controlador.selectSimple(listaAtributos, palabraTercerNivel, palabraCuartoNivel)
+                controlador.selectSimple(listaAtributos, palabraTercerNivel, operacion,palabraCuartoNivel)
                 palabraCuartoNivel = ""
                 listaAtributos = []
                 palabraTercerNivel = ""
+                operacion = ""
                 aceptado = True
             elif opcion[i] == '"' and i != len(opcion.strip()) - 1:
                 estado = 23
@@ -276,19 +288,21 @@ while True:
                     if palabraCuartoNivel.isdigit():
                         mandarNumero = int(palabraCuartoNivel)
                         controlador = ControladorEntrada()
-                        controlador.selectSimple(listaAtributos, palabraTercerNivel, mandarNumero)
+                        controlador.selectSimple(listaAtributos, palabraTercerNivel, operacion,mandarNumero)
                         palabraCuartoNivel = ""
                         listaAtributos = []
                         palabraTercerNivel = ""
+                        operacion = ""
                         aceptado = True
                     else:
                         mandarNumero = float(palabraCuartoNivel)
                         #print("numero recib cuarto nivel en estado 24" + str(mandarNumero))
                         controlador = ControladorEntrada()
-                        controlador.selectSimple(listaAtributos, palabraTercerNivel, mandarNumero)
+                        controlador.selectSimple(listaAtributos, palabraTercerNivel, operacion, mandarNumero)
                         palabraCuartoNivel = ""
                         listaAtributos = []
                         palabraTercerNivel = ""
+                        operacion = ""
                         aceptado = True
             elif opcion[i] == " " and i != len(opcion.strip()) - 1:
                 if palabraCuartoNivel.isdigit():
@@ -352,7 +366,7 @@ while True:
             #print(palabraTercerNivel, palabraCuartoNivel, palabraQuintoNivel, atributoExtendido, operacionExtendida,
             #      valAtributoExtendido)
             controladorEx = ControladorEntrada()
-            controladorEx.selectExtend(listaAtributos, palabraTercerNivel, palabraCuartoNivel, palabraQuintoNivel,
+            controladorEx.selectExtend(listaAtributos, palabraTercerNivel, operacion, palabraCuartoNivel, palabraQuintoNivel,
                                        atributoExtendido, operacionExtendida, valAtributoExtendido)
             listaAtributos = []
             palabraTercerNivel = ""
@@ -366,10 +380,10 @@ while True:
         elif estado == 31:
             if opcion[i].isalpha():
                 palabraTercerNivel = palabraTercerNivel + opcion[i]
-                if i == len(opcion.strip()) -1:
+                if i == len(opcion.strip()) - 1:
                     control = ControladorEntrada()
                     control.addColor(palabraTercerNivel.upper())
-                    print(f"{RegistroSet.color}",end="")
+                    print(f"{RegistroSet.color}", end="")
                     aceptado = True
 
     if aceptado == False:

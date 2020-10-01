@@ -147,389 +147,279 @@ class ControladorEntrada:
             print(f"El SELF {nombreSet} no existe")
             print("//////////////////////////////////////////////////////////////////////////////////////////////////")
 
-    def selectSimple(self, listaAtributos, atributoComp, valorAtribComp):
+    def selectSimple(self, listaAtributos, atributoComp, operacion,valorAtribComp):
+        print("##########################################SELECT SIMPLE###########################################")
         temp = RegistroSet.listaEnUso
-        if listaAtributos[0] == "*":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp:
-                    print(registro)
-                    print("//////////////////////////////////////////////////////////////////////////////////////////////////")
+        if operacion == "=":
+            if listaAtributos[0] == "*":
+                for registro in temp:
+                    if registro.get(atributoComp) == valorAtribComp:
+                        print(registro)
+                        print(
+                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
 
-        else:
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp:
-                    for atrib in listaAtributos:
+            else:
+                for registro in temp:
+                    if registro.get(atributoComp) == valorAtribComp:
+                        for atrib in listaAtributos:
                             print(f"{atrib} : {registro.get(atrib)}")
-                    print("//////////////////////////////////////////////////////////////////////////////////////////////////")
+                        print(
+                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+
+        elif operacion == "!=":
+            if listaAtributos[0] == "*":
+                for registro in temp:
+                    if registro.get(atributoComp) != valorAtribComp:
+                        print(registro)
+                        print(
+                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+
+            else:
+                for registro in temp:
+                    if registro.get(atributoComp) != valorAtribComp:
+                        for atrib in listaAtributos:
+                            print(f"{atrib} : {registro.get(atrib)}")
+                        print(
+                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+
+        elif operacion == "<":
+            if listaAtributos[0] == "*":
+                for registro in temp:
+                    if registro.get(atributoComp) < valorAtribComp:
+                        print(registro)
+                        print(
+                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+
+            else:
+                for registro in temp:
+                    if registro.get(atributoComp) < valorAtribComp:
+                        for atrib in listaAtributos:
+                            print(f"{atrib} : {registro.get(atrib)}")
+                        print(
+                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+
+        elif operacion == "<=":
+            if listaAtributos[0] == "*":
+                for registro in temp:
+                    if registro.get(atributoComp) <= valorAtribComp:
+                        print(registro)
+                        print(
+                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+
+            else:
+                for registro in temp:
+                    if registro.get(atributoComp) <= valorAtribComp:
+                        for atrib in listaAtributos:
+                            print(f"{atrib} : {registro.get(atrib)}")
+                        print(
+                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+
+        elif operacion == ">":
+            if listaAtributos[0] == "*":
+                for registro in temp:
+                    if registro.get(atributoComp) > valorAtribComp:
+                        print(registro)
+                        print(
+                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+
+            else:
+                for registro in temp:
+                    if registro.get(atributoComp) > valorAtribComp:
+                        for atrib in listaAtributos:
+                            print(f"{atrib} : {registro.get(atrib)}")
+                        print(
+                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+
+        elif operacion == ">=":
+            if listaAtributos[0] == "*":
+                for registro in temp:
+                    if registro.get(atributoComp) >= valorAtribComp:
+                        print(registro)
+                        print(
+                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+
+            else:
+                for registro in temp:
+                    if registro.get(atributoComp) >= valorAtribComp:
+                        for atrib in listaAtributos:
+                            print(f"{atrib} : {registro.get(atrib)}")
+                        print("//////////////////////////////////////////////////////////////////////////////////////////////////")
 
     def selectAll(self, listaAtributos):
+        print("##########################################SELECT ALL###########################################")
         temp = RegistroSet.listaEnUso
         if listaAtributos[0] == "*":
             for registro in temp:
                 print(registro)
                 print("///////////////////////////////////////////////////////////////////////")
 
-    def selectExtend(self, listaAtributos, atributoComp, valorAtribComp, operacionExt, atribEx, operador, valorAtribEx):
-        temp = RegistroSet.listaEnUso
+    def selectExtend(self, listaAtributos, atributoComp, primeraOperacion, valorAtribComp, operacionExt, atribEx, operador, valorAtribEx):
+        print("##########################################SELECT EXTEND###########################################")
+        temp = RegistroSet.firtsComp
+        temp2 = RegistroSet.secondComp
+        self.firstComp(atributoComp, primeraOperacion, valorAtribComp)
+        self.secondComp(atribEx, operador, valorAtribEx)
         if operacionExt == "AND":
-            #print("entro al and")
-            if operador == "<":
-                #print("entro al menor")
-                if listaAtributos[0] == "*":
-                    #print("entro al *")
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "and", "<")
+            if listaAtributos[0] == "*":
+                for registro in temp:
+                    for repetido in temp2:
+                        if registro == repetido:
+                            print(registro)
+                RegistroSet.firtsComp = []
+                RegistroSet.secondComp = []
+                print(
+                    "//////////////////////////////////////////////////////////////////////////////////////////////////")
+            else:
+                for registro in temp:
+                    for repetido in temp2:
+                        if registro == repetido:
+                            for atrib in listaAtributos:
+                                print(f"{atribEx}: {registro.get(atrib)}")
+                RegistroSet.firtsComp = []
+                RegistroSet.secondComp = []
+                print(
+                    "//////////////////////////////////////////////////////////////////////////////////////////////////")
 
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "and",
-                                            "<")
-            elif operador == ">":
-                if listaAtributos[0] == "*":
-                    #print("entro al *")
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "and", ">")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "and",
-                                            ">")
-
-            elif operador == "<=":
-                if listaAtributos[0] == "*":
-                    #print("entro al *")
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "and", "<=")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "and",
-                                            "<=")
-            elif operador == ">=":
-                if listaAtributos[0] == "*":
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "and", ">=")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "and",
-                                            ">=")
-            elif operador == "=":
-                if listaAtributos[0] == "*":
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "and", "=")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "and",
-                                            "=")
-            elif operador == "!=":
-                if listaAtributos[0] == "*":
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "and", "!=")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "and",
-                                            "!=")
         elif operacionExt == "OR":
-            if operador == "<":
-                if listaAtributos[0] == "*":
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "or", "<")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "or",
-                                            "<")
-            elif operador == ">":
-                if listaAtributos[0] == "*":
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "or", ">")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "or",
-                                            ">")
-            elif operador == "<=":
-                if listaAtributos[0] == "*":
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "or", "<=")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "or",
-                                            "<=")
-            elif operador == ">=":
-                if listaAtributos[0] == "*":
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "or", ">=")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "or",
-                                            ">=")
-            elif operador == "=":
-                if listaAtributos[0] == "*":
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "or", "=")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "or",
-                                            "=")
-            elif operador == "!=":
-                if listaAtributos[0] == "*":
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "or", "!=")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "or",
-                                            "!=")
+            resultado = []
+            sumaLista = []
+            if listaAtributos[0] == "*":
+                for item in temp:
+                    sumaLista.append(item)
+                for item in temp2:
+                    sumaLista.append(item)
+
+                for item in sumaLista:
+                    if item not in resultado:
+                        resultado.append(item)
+                #print(resultado)
+                for item in resultado:
+                    print(item)
+                    print(
+                    "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                RegistroSet.firtsComp = []
+                RegistroSet.secondComp = []
+                resultado = []
+                sumaLista = []
+            else:
+                for item in temp:
+                    sumaLista.append(item)
+                for item in temp2:
+                    sumaLista.append(item)
+                for item in sumaLista:
+                    if item not in resultado:
+                        resultado.append(item)
+                #print(resultado)
+                for item in resultado:
+                    for atrib in listaAtributos:
+                        print(f"{atrib}: {item.get(atrib)}")
+                    print(
+                    "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                RegistroSet.firtsComp = []
+                RegistroSet.secondComp = []
+                resultado = []
+                sumaLista = []
+
         elif operacionExt == "XOR":
-            if operador == "<":
-                if listaAtributos[0] == "*":
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "xor", "<")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "xor",
-                                            "<")
-            elif operador == ">":
-                if listaAtributos[0] == "*":
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "xor", ">")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "xor",
-                                            ">")
-            elif operador == "<=":
-                if listaAtributos[0] == "*":
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "xor", "<=")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "xor",
-                                            "<=")
-            elif operador == ">=":
-                if listaAtributos[0] == "*":
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "xor", ">=")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "xor",
-                                            ">=")
-            elif operador == "=":
-                if listaAtributos[0] == "*":
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "xor", "=")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "xor",
-                                            "=")
-            elif operador == "!=":
-                if listaAtributos[0] == "*":
-                    self.selectAllExtend(atributoComp, valorAtribComp, atribEx, valorAtribEx, "xor", "!=")
-                else:
-                    self.selectAtribsExtend(listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, "xor",
-                                            "!=")
+            resultado = []
+            if listaAtributos[0] == "*":
+                for item in temp:
+                    if item not in temp2:
+                        resultado.append(item)
+                for item2 in temp2:
+                    if item2 not in temp:
+                        resultado.append(item2)
+                for reg in resultado:
+                    print(reg)
+                    print(
+                        "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                    RegistroSet.firtsComp = []
+                    RegistroSet.secondComp = []
+            else:
+                for item in temp:
+                    if item not in temp2:
+                        resultado.append(item)
+                for item2 in temp2:
+                    if item2 not in temp:
+                        resultado.append(item2)
+                for reg in resultado:
+                    for atrib in listaAtributos:
+                        print(f"{atrib}: {reg.get(atrib)}")
+                        print(
+                        "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                        RegistroSet.firtsComp = []
+                        RegistroSet.secondComp = []
 
-    def selectAllExtend(self, atributoComp, valorAtribComp, atribEx, valorAtribEx, condicional, operacion):
+
+    def firstComp(self, atributoComp, primeraOperacion, valorAtributoComp):
         temp = RegistroSet.listaEnUso
-        if condicional == "and" and operacion == "<":
+        if primeraOperacion == "=":
             for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp and registro.get(atribEx) < valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "and" and operacion == ">":
+                if registro.get(atributoComp) == valorAtributoComp:
+                    RegistroSet.firtsComp.append(registro)
+                    #print(f"firstComp--->{RegistroSet.firtsComp}")
+        elif primeraOperacion == "<":
             for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp and registro.get(atribEx) > valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "and" and operacion == "<=":
+                if registro.get(atributoComp) < valorAtributoComp:
+                    RegistroSet.firtsComp.append(registro)
+                    #print(f"firstComp--->{RegistroSet.firtsComp}")
+        elif primeraOperacion == ">":
             for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp and registro.get(atribEx) <= valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "and" and operacion == ">=":
+                if registro.get(atributoComp) > valorAtributoComp:
+                    RegistroSet.firtsComp.append(registro)
+                    #print(f"firstComp--->{RegistroSet.firtsComp}")
+        elif primeraOperacion == "<=":
             for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp and registro.get(atribEx) >= valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "and" and operacion == "=":
+                if registro.get(atributoComp) <= valorAtributoComp:
+                    RegistroSet.firtsComp.append(registro)
+                    #print(f"firstComp--->{RegistroSet.firtsComp}")
+        elif primeraOperacion == ">=":
             for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp and registro.get(atribEx) == valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "and" and operacion == "!=":
+                if registro.get(atributoComp) >= valorAtributoComp:
+                    RegistroSet.firtsComp.append(registro)
+                    #print(f"firstComp--->{RegistroSet.firtsComp}")
+        elif primeraOperacion == "!=":
             for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp and registro.get(atribEx) != valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
+                if registro.get(atributoComp) != valorAtributoComp:
+                    RegistroSet.firtsComp.append(registro)
+                    #print(f"firstComp--->{RegistroSet.firtsComp}")
 
-        elif condicional == "or" and operacion == "<":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp or registro.get(atribEx) < valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "or" and operacion == ">":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp or registro.get(atribEx) > valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "or" and operacion == "<=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp or registro.get(atribEx) <= valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "or" and operacion == ">=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp or registro.get(atribEx) >= valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "or" and operacion == "=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp or registro.get(atribEx) == valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "or" and operacion == "!=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp or registro.get(atribEx) != valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "xor" and operacion == "<":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp ^ registro.get(atribEx) < valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "xor" and operacion == ">":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp ^ registro.get(atribEx) > valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "xor" and operacion == "<=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp ^ registro.get(atribEx) <= valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "xor" and operacion == ">=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp ^ registro.get(atribEx) >= valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "xor" and operacion == "=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp ^ registro.get(atribEx) == valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "xor" and operacion == "!=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp ^ registro.get(atribEx) != valorAtribEx:
-                    print(registro)
-                    print("///////////////////////////////////////////////////////////////////////")
-
-    def selectAtribsExtend(self, listaAtributos, atributoComp, valorAtribComp, atribEx, valorAtribEx, condicional, operacion):
+    def secondComp(self, atribEx, operador, valorAtribEx):
         temp = RegistroSet.listaEnUso
-        if condicional == "and" and operacion == "<":
+        if operador == "=":
             for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp and registro.get(atribEx) < valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
+                if registro.get(atribEx) == valorAtribEx:
+                    RegistroSet.secondComp.append(registro)
+                    #print("Second Comp", RegistroSet.secondComp)
 
-        elif condicional == "and" and operacion == ">":
+        elif operador == "<":
             for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp and registro.get(atribEx) > valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "and" and operacion == "<=":
+                if registro.get(atribEx) < valorAtribEx:
+                    RegistroSet.secondComp.append(registro)
+                    #print("Second Comp", RegistroSet.secondComp)
+        elif operador == ">":
             for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp and registro.get(atribEx) <= valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "and" and operacion == ">=":
+                if registro.get(atribEx) > valorAtribEx:
+                    RegistroSet.secondComp.append(registro)
+                    #print("Second Comp", RegistroSet.secondComp)
+        elif operador == "<=":
             for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp and registro.get(atribEx) >= valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "and" and operacion == "=":
+                if registro.get(atribEx) <= valorAtribEx:
+                    RegistroSet.secondComp.append(registro)
+                    #print("Second Comp", RegistroSet.secondComp)
+        elif operador == ">=":
             for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp and registro.get(atribEx) == valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "and" and operacion == "!=":
+                if registro.get(atribEx) >= valorAtribEx:
+                    RegistroSet.secondComp.append(registro)
+                    #print("Second Comp", RegistroSet.secondComp)
+        elif operador == "!=":
             for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp and registro.get(atribEx) != valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "or" and operacion == "<":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp or registro.get(atribEx) < valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "or" and operacion == ">":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp or registro.get(atribEx) > valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "or" and operacion == "<=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp or registro.get(atribEx) <= valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "or" and operacion == ">=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp or registro.get(atribEx) >= valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "or" and operacion == "=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp or registro.get(atribEx) == valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "or" and operacion == "!=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp or registro.get(atribEx) != valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "xor" and operacion == "<":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp ^ registro.get(atribEx) < valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "xor" and operacion == ">":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp ^ registro.get(atribEx) > valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "xor" and operacion == "<=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp ^ registro.get(atribEx) <= valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "xor" and operacion == ">=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp ^ registro.get(atribEx) >= valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "xor" and operacion == "=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp ^ registro.get(atribEx) == valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
-        elif condicional == "xor" and operacion == "!=":
-            for registro in temp:
-                if registro.get(atributoComp) == valorAtribComp ^ registro.get(atribEx) != valorAtribEx:
-                    for atrib in listaAtributos:
-                        print(f"{atrib} : {registro.get(atrib)}")
-                    print("///////////////////////////////////////////////////////////////////////")
-
+                if registro.get(atribEx) != valorAtribEx:
+                    RegistroSet.secondComp.append(registro)
+                    #print("Second Comp", RegistroSet.secondComp)
 
     def listAttributes(self):
+        print("##########################################LIST ATTRIBUTES###########################################")
         aux = RegistroSet.listaEnUso
         for item in aux:
             keys = item.keys()
@@ -545,6 +435,7 @@ class ControladorEntrada:
             print("//////////////////////////////////////////////////////////////////////////////////////////////////")
 
     def addColor(self, color):
+        print("##########################################ADD COLOR###########################################")
         if color == "RED":
             RegistroSet.color = "\u001b[31m"
             #RegistroSet.color = "\033[38:5:196m"
@@ -562,6 +453,7 @@ class ControladorEntrada:
             RegistroSet.color = "\033[38;5;201m"
 
     def max(self, atributo):
+        print("##########################################MAXIMO###########################################")
         temp = RegistroSet.listaEnUso
         listaElementosNum = []
         if temp[0].get(atributo) is not None and temp[1].get(atributo) is not None:
@@ -583,6 +475,7 @@ class ControladorEntrada:
         print("//////////////////////////////////////////////////////////////////////////////////////////////////")
 
     def min(self, atributo):
+        print("########################################## MINIMO ###########################################")
         temp = RegistroSet.listaEnUso
         listaElementosNum = []
         if temp[0].get(atributo) is not None and temp[1].get(atributo) is not None:
@@ -603,6 +496,7 @@ class ControladorEntrada:
         print("//////////////////////////////////////////////////////////////////////////////////////////////////")
 
     def sum(self, listaAtributos):
+        print("########################################## SUMA ###########################################")
         temp = RegistroSet.listaEnUso
         listaSum = []
         if listaAtributos[0] == "*":
@@ -623,6 +517,7 @@ class ControladorEntrada:
         print("//////////////////////////////////////////////////////////////////////////////////////////////////")
 
     def count(self, listaAtributos):
+        print("########################################## COUNT ###########################################")
         temp = RegistroSet.listaEnUso
         atributos = temp[0].keys()
         contador = 0
