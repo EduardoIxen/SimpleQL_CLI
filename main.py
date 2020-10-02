@@ -56,9 +56,9 @@ def principal(op):
                     elif palabraReservada.upper() == "REPORT":
                         estado = 12
                         continue
-                    elif palabraReservada.upper() == "SCRIPT":
-                        print("SCRIPT")
-                        estado = 1
+                    elif palabraReservada.upper() == "SCRIPT ":
+                        estado = 13
+                        continue
             elif estado == 1:
                 if opcion[i].isalpha():
                     palabraSegundoNivel = palabraSegundoNivel + opcion[i]
@@ -130,24 +130,30 @@ def principal(op):
             elif estado == 10:
                 if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_" or opcion[i] == "*":
                     palabraSegundoNivel = palabraSegundoNivel + opcion[i]
-                if opcion[i] == "," or opcion[i] == " " or i == len(opcion.strip()) - 1:
+                if opcion[i] == "," or opcion[i] == " ":
                     if palabraSegundoNivel != "":
+                        listaAtributos.append(palabraSegundoNivel.strip())
+                        palabraSegundoNivel = ""
+                if i == len(opcion.strip()) - 1:
+                    if palabraSegundoNivel != " " or palabraSegundoNivel != "":
                         listaAtributos.append(palabraSegundoNivel.strip())
                         control = ControladorEntrada()
                         control.sum(listaAtributos)
-                        palabraSegundoNivel = ""
                         listaAtributos = []
                         aceptado = True
 
             elif estado == 11:
                 if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_" or opcion[i] == "*":
                     palabraSegundoNivel = palabraSegundoNivel + opcion[i]
-                if opcion[i] == "," or opcion[i] == " " or i == len(opcion.strip()) - 1:
+                if opcion[i] == "," or opcion[i] == " ":
                     if palabraSegundoNivel != "":
+                        listaAtributos.append(palabraSegundoNivel.strip())
+                        palabraSegundoNivel = ""
+                if i == len(opcion.strip()) - 1:
+                    if palabraSegundoNivel != " " or palabraSegundoNivel != "":
                         listaAtributos.append(palabraSegundoNivel.strip())
                         control = ControladorEntrada()
                         control.count(listaAtributos)
-                        palabraSegundoNivel = ""
                         listaAtributos = []
                         aceptado = True
 
@@ -159,6 +165,9 @@ def principal(op):
                         palabraSegundoNivel = ""
                         RegistroSet.reporte = True
                         continue
+            elif estado == 13:
+                if opcion[i].isalpha() or opcion[i].isdigit() or opcion == "."
+                    c://carpera/asd
 
             elif estado == 14:
                 if i <= len(opcion):
