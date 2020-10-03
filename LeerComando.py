@@ -452,6 +452,7 @@ class LeerComando:
                     estado = 0
                     # print(palabraCuartoNivel)
                     self.principalSeg(str(palabraCuartoNivel))
+                    aceptado = True
 
         if aceptado == False:
             print("ERROR// COMANDO INVALIDO")

@@ -64,6 +64,7 @@ class Reporte:
                 RegistroSet.reporte = False
             else:
                 print("Archivo guardado en la carpeta 'reporte'")
+                RegistroSet.reporte = False
         else:
             print("NO EXISTEN COINCIDENCIAS")
             RegistroSet.reporte = False
