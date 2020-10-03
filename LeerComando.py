@@ -1,18 +1,29 @@
-from LeerComando import *
-from CargarArchivo import *
-from RegistroSet import *
 from ControladorEntrada import *
 
-def principal(op):
-    listaAtributos = []
-    contadorRep = 0
-    while True:
-        if op != "a" and contadorRep == 0 and RegistroSet.reporte == True:
-            opcion = op
-            contadorRep += 1
-        else:
-            opcion = str(input("Ingrese el comando\n"))
-            contadorRep = 0
+
+class LeerComando:
+
+    def cargarArchivo(self, listaArchivo):
+        comando = ""
+        for nombreArchivo in listaArchivo:
+            if path.exists(f'scriptSIQL/{nombreArchivo}'):
+                fichero = open(f'scriptSIQL/{nombreArchivo}', 'r')
+                lineasCargadas = fichero.readlines()
+                fichero.close()
+                cadenaCargada = "".join(lineasCargadas)
+                #print(cadenaCargada)
+                for i in range(len(cadenaCargada.strip())):
+                    if cadenaCargada[i] != ";":
+                        comando = comando + cadenaCargada[i]
+                    if cadenaCargada[i] == ";":
+                        print(comando.strip())
+                        self.principalSeg(comando.strip())
+                        comando = ""
+
+    def principalSeg(self, op):
+        listaAtributos = []
+        contadorRep = 0
+        opcion = op
         estado = 0
         palabraReservada = ""
         palabraSegundoNivel = ""
@@ -75,8 +86,9 @@ def principal(op):
                     palabraSegundoNivel = palabraSegundoNivel + opcion[i]
                     if palabraSegundoNivel.upper() == "SET":
                         estado = 18
-            elif estado == 4: #obtener lista de atributos para seleccionar
-                if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_" or opcion[i] == "*" and i != len(opcion.strip())-1:
+            elif estado == 4:  # obtener lista de atributos para seleccionar
+                if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_" or opcion[i] == "*" and i != len(
+                        opcion.strip()) - 1:
                     palabraSegundoNivel = palabraSegundoNivel + opcion[i]
                 elif opcion[i] == "," or opcion[i] == " ":
                     if palabraSegundoNivel != "" and palabraSegundoNivel.upper().strip() != "WHERE":
@@ -167,7 +179,8 @@ def principal(op):
                         RegistroSet.reporte = True
                         continue
             elif estado == 13:
-                if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "." or opcion[i] == "/" or opcion[i] == '\\' \
+                if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "." or opcion[i] == "/" or opcion[
+                    i] == '\\' \
                         or opcion[i] == ":":
                     palabraSegundoNivel = palabraSegundoNivel + opcion[i]
                 elif opcion[i] == ",":
@@ -177,10 +190,8 @@ def principal(op):
                 if i == len(opcion.strip()) - 1:
                     listaAtributos.append(palabraSegundoNivel)
                     palabraSegundoNivel = ""
-                    #control = ControladorEntrada()
-                    #control.loadScript(listaAtributos)
-                    leer = LeerComando()
-                    leer.cargarArchivo(listaAtributos)
+                    control = ControladorEntrada()
+                    control.loadScript(listaAtributos)
                     listaAtributos = []
                     aceptado = True
 
@@ -189,13 +200,14 @@ def principal(op):
                     if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_":
                         palabraTercerNivel = palabraTercerNivel + opcion[i]
                         if i == len(opcion.strip()) - 1:
-                            #print(palabraReservada + " " + palabraSegundoNivel + " " + palabraTercerNivel)
+                            # print(palabraReservada + " " + palabraSegundoNivel + " " + palabraTercerNivel)
                             create = ControladorEntrada()
                             create.createSet(palabraTercerNivel)
                             items = RegistroSet.registros.items()
                             print(f"SET ---{palabraTercerNivel}--- CREADO CORRECTAMENTE")
-                            print("//////////////////////////////////////////////////////////////////////////////////////////////////")
-                            #print(items)
+                            print(
+                                "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                            # print(items)
                             palabraReservada = ""
                             palabraSegundoNivel = ""
                             palabraTercerNivel = ""
@@ -207,7 +219,7 @@ def principal(op):
                 elif opcion[i] == " ":
                     contadorAtributos = contadorAtributos + 1
                     if contadorAtributos == 2:
-                        #print(palabraTercerNivel)
+                        # print(palabraTercerNivel)
                         estado = 16
             elif estado == 16:
                 if opcion[i].isalpha():
@@ -215,15 +227,15 @@ def principal(op):
                 elif opcion[i] == " ":
                     if palabraCuartoNivel.upper() == "FILES":
                         estado = 17
-            elif estado == 17: #obtener archivos a cargar por separado
+            elif estado == 17:  # obtener archivos a cargar por separado
                 if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_" or opcion[i] == ".":
                     if i == len(opcion.strip()) - 1:
                         palabraQuintoNivel = palabraQuintoNivel + opcion[i]
-                        #print("Finaaal")
+                        # print("Finaaal")
                         listaAtributos.append(palabraQuintoNivel)
                         palabraQuintoNivel = ""
-                        #for atributo in listaAtributos:
-                            #print("Imprimiendo lista final " + atributo)
+                        # for atributo in listaAtributos:
+                        # print("Imprimiendo lista final " + atributo)
                         ctrl = ControladorEntrada()
                         ctrl.loadInto(palabraTercerNivel, listaAtributos)
                         listaAtributos = []
@@ -238,7 +250,7 @@ def principal(op):
                     if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "_":
                         palabraTercerNivel = palabraTercerNivel + opcion[i]
                         if i == len(opcion.strip()) - 1:
-                            #print(palabraReservada + " " + palabraSegundoNivel + " " + palabraTercerNivel)
+                            # print(palabraReservada + " " + palabraSegundoNivel + " " + palabraTercerNivel)
                             use = ControladorEntrada()
                             use.useSet(palabraTercerNivel)
                             aceptado = True
@@ -248,9 +260,9 @@ def principal(op):
                 else:
                     if opcion[i] == "<" or opcion[i] == ">" or opcion[i] == "=" or opcion[i] == "!":
                         operacion = operacion + opcion[i]
-                        #print(operacion)
+                        # print(operacion)
                     if contOp == 2:
-                        #print(f"{operacion} operacion de primera condicion")
+                        # print(f"{operacion} operacion de primera condicion")
                         estado = 20
                         contOp = 0
                     else:
@@ -267,9 +279,9 @@ def principal(op):
                     estado = 22
                     continue
             if estado == 21:
-                if i == len(opcion.strip())-1:
+                if i == len(opcion.strip()) - 1:
                     if palabraCuartoNivel.upper() == "TRUE":
-                        #print("rs true cuarto nivel en estado 21")
+                        # print("rs true cuarto nivel en estado 21")
                         controlador = ControladorEntrada()
                         controlador.selectSimple(listaAtributos, palabraTercerNivel, operacion, True)
                         palabraCuartoNivel = ""
@@ -278,9 +290,9 @@ def principal(op):
                         operacion = ""
                         aceptado = True
                     elif palabraCuartoNivel.upper() == "FALSE":
-                        #print("es false cuarto nivel en estado 21")
+                        # print("es false cuarto nivel en estado 21")
                         controlador = ControladorEntrada()
-                        controlador.selectSimple(listaAtributos, palabraTercerNivel, operacion,False)
+                        controlador.selectSimple(listaAtributos, palabraTercerNivel, operacion, False)
                         palabraCuartoNivel = ""
                         listaAtributos = []
                         palabraTercerNivel = ""
@@ -298,9 +310,9 @@ def principal(op):
                 if opcion[i] != '"':
                     palabraCuartoNivel = palabraCuartoNivel + opcion[i]
                 elif opcion[i] == '"' and i == len(opcion.strip()) - 1:
-                    #print("curto nivel en estado 22",palabraCuartoNivel)
+                    # print("curto nivel en estado 22",palabraCuartoNivel)
                     controlador = ControladorEntrada()
-                    controlador.selectSimple(listaAtributos, palabraTercerNivel, operacion,palabraCuartoNivel)
+                    controlador.selectSimple(listaAtributos, palabraTercerNivel, operacion, palabraCuartoNivel)
                     palabraCuartoNivel = ""
                     listaAtributos = []
                     palabraTercerNivel = ""
@@ -322,7 +334,7 @@ def principal(op):
                         if palabraCuartoNivel.isdigit():
                             mandarNumero = int(palabraCuartoNivel)
                             controlador = ControladorEntrada()
-                            controlador.selectSimple(listaAtributos, palabraTercerNivel, operacion,mandarNumero)
+                            controlador.selectSimple(listaAtributos, palabraTercerNivel, operacion, mandarNumero)
                             palabraCuartoNivel = ""
                             listaAtributos = []
                             palabraTercerNivel = ""
@@ -330,7 +342,7 @@ def principal(op):
                             aceptado = True
                         else:
                             mandarNumero = float(palabraCuartoNivel)
-                            #print("numero recib cuarto nivel en estado 24" + str(mandarNumero))
+                            # print("numero recib cuarto nivel en estado 24" + str(mandarNumero))
                             controlador = ControladorEntrada()
                             controlador.selectSimple(listaAtributos, palabraTercerNivel, operacion, mandarNumero)
                             palabraCuartoNivel = ""
@@ -368,7 +380,7 @@ def principal(op):
                     estado = 28
                     continue
             if estado == 27:
-                if i == len(opcion.strip())-1:
+                if i == len(opcion.strip()) - 1:
                     if valAtributoExtendido.upper() == "TRUE":
                         valAtributoExtendido = True
                         estado = 30
@@ -381,7 +393,7 @@ def principal(op):
                     valAtributoExtendido = valAtributoExtendido + opcion[i]
                 elif opcion[i] == '"' and i == len(opcion.strip()) - 1:
                     estado = 30
-                    #mandar a otro estado para el controlador
+                    # mandar a otro estado para el controlador
 
             if estado == 29:
                 if opcion[i].isdigit() or opcion[i] == "." or opcion[i] == "+" or opcion[i] == "-":
@@ -393,14 +405,15 @@ def principal(op):
                         else:
                             valAtributoExtendido = float(valAtributoExtendido)
                             estado = 30
-                            #print("numero recib cuarto nivel en estado 24" + str(mandarNumero))
+                            # print("numero recib cuarto nivel en estado 24" + str(mandarNumero))
 
             if estado == 30:
-                #print(listaAtributos)
-                #print(palabraTercerNivel, palabraCuartoNivel, palabraQuintoNivel, atributoExtendido, operacionExtendida,
+                # print(listaAtributos)
+                # print(palabraTercerNivel, palabraCuartoNivel, palabraQuintoNivel, atributoExtendido, operacionExtendida,
                 #      valAtributoExtendido)
                 controladorEx = ControladorEntrada()
-                controladorEx.selectExtend(listaAtributos, palabraTercerNivel, operacion, palabraCuartoNivel, palabraQuintoNivel,
+                controladorEx.selectExtend(listaAtributos, palabraTercerNivel, operacion, palabraCuartoNivel,
+                                           palabraQuintoNivel,
                                            atributoExtendido, operacionExtendida, valAtributoExtendido)
                 listaAtributos = []
                 palabraTercerNivel = ""
@@ -425,7 +438,7 @@ def principal(op):
                     palabraTercerNivel = palabraTercerNivel + opcion[i]
                 if opcion[i] == " ":
                     if contVacio == 1:
-                        #print(palabraTercerNivel)
+                        # print(palabraTercerNivel)
                         RegistroSet.nombreReporte = palabraTercerNivel
                         estado = 33
                     else:
@@ -434,12 +447,11 @@ def principal(op):
             elif estado == 33:
                 palabraCuartoNivel = palabraCuartoNivel + opcion[i]
                 if i == len(opcion.strip()) - 1:
-                    #print(palabraCuartoNivel)
-                    #opcion = palabraCuartoNivel
+                    # print(palabraCuartoNivel)
+                    # opcion = palabraCuartoNivel
                     estado = 0
-                    #print(palabraCuartoNivel)
-                    principal(str(palabraCuartoNivel))
-
+                    # print(palabraCuartoNivel)
+                    self.principalSeg(str(palabraCuartoNivel))
 
         if aceptado == False:
             print("ERROR// COMANDO INVALIDO")
@@ -448,11 +460,3 @@ def principal(op):
             palabraTercerNivel = ""
             palabraCuartoNivel = ""
             palabraQuintoNivel = ""
-
-            #dar formato a los numeros que se manda al metodo ya que todos se mandan como string y eso no se acepta
-
-def principalSinAtrb():
-    cadena = "a"
-    principal(cadena)
-if __name__ == '__main__':
-    principalSinAtrb()

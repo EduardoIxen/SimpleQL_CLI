@@ -1,6 +1,7 @@
 from CargarArchivo import *
 from RegistroSet import *
-from Reporte import  *
+from Reporte import *
+import os.path
 
 class ControladorEntrada:
     def createSet(self, nombreSet):
@@ -333,8 +334,8 @@ class ControladorEntrada:
         self.secondComp(atribEx, operador, valorAtribEx)
         temp = RegistroSet.firtsComp
         temp2 = RegistroSet.secondComp
-        print("temp1",temp)
-        print("temp2",temp2)
+        #print("temp1",temp)
+        #print("temp2",temp2)
         if operacionExt == "AND":
             if listaAtributos[0] == "*":
                 for item in temp:
@@ -741,3 +742,8 @@ class ControladorEntrada:
                 reporte = Reporte()
                 reporte.crearHtml(listaReporte)
         print("//////////////////////////////////////////////////////////////////////////////////////////////////")
+
+    def loadScript(self, listaDirecciones):
+        carga = CargarArchivo()
+        for item in listaDirecciones:
+            carga.cargarScript(item)
