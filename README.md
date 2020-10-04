@@ -75,6 +75,7 @@ LOAD INTO prueba FILES ejemplo.aon, ejemplo2.aon
 USE SET prueba
 ```
 - **SELECT atributo1, atributo2, ... WHERE < condicion >:** Permite seleccionar uno o mas registros con base a la condicion ingresada, la condicion consiste de operaciones que se le pueden aplicar a cierto atributo y puede ser: 
+
 | Signo | Descripcion |
 | ----- | ----------- |
 | < | Menor que |
@@ -93,6 +94,7 @@ Otra funcionalidad del comando SELECT es la ampliacion de la condiciones mediant
 | AND | Las dos condiciones deben cumplirse |
 | OR | Una o las dos condiciones pueden cumplirse |
 | XOR | Solo una condicion puede cumplirse |
+
 A la ampliacion consiste en aplicarle las mismar operaciones mencionadas anteriormente a otro atributo y operarlos con los operadores lógicos.
 
 ```sh
@@ -134,4 +136,12 @@ REPORT TO reporte1 SELECT * WHERE nombre = "Tomas"
 REPORT TO reporte2 SELECT nombre, edad WHERE edad = 31 AND nombre != "Pedro"
 REPORT TO reporte3 LIST ATTRIBUTES
 ```
-- **SCRIPT < archivo.siql >, ... < archivoN.siql >:** 
+- **SCRIPT < archivo.siql >, ... < archivoN.siql >:** Este comando permite cargar scripts con extensión .siql que contienen series de
+instrucciones y comandos SimpleQL. Los scripts deben de estar en la carpeta **scriptSIQL** del proyecto. Si desea cargar mas de un script, el nombre debe de ir separado por **,**.
+```sh
+SCRIPT entrada1.siql, entrada2.siql
+```
+- **REPORT TOKENS**: Este comando crea un reporte en html que muestra una lista de todos los lexemas encontrados por el AFD.
+```SH
+REPORT TOKENS
+```
