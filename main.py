@@ -202,6 +202,7 @@ def principal(op):
                             items = RegistroSet.registros.items()
                             print(f"SET ---{palabraTercerNivel}--- CREADO CORRECTAMENTE")
                             print("//////////////////////////////////////////////////////////////////////////////////////////////////")
+                            print()
                             #print(items)
                             palabraReservada = ""
                             palabraSegundoNivel = ""

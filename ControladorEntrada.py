@@ -143,12 +143,14 @@ class ControladorEntrada:
             RegistroSet.listaEnUso = RegistroSet.registros.get(nombreSet)
             print(f"SET ---{nombreSet}--- EN USO!!!")
             print("//////////////////////////////////////////////////////////////////////////////////////////////////")
+            print()
             #print("lista en uso")
             #print(RegistroSet.listaEnUso)
             #print("fin lista en uso")
         else:
             print(f"El SELF {nombreSet} no existe")
             print("//////////////////////////////////////////////////////////////////////////////////////////////////")
+            print()
 
     def selectSimple(self, listaAtributos, atributoComp, operacion,valorAtribComp):
         listaReporte = []
@@ -322,6 +324,7 @@ class ControladorEntrada:
                 if RegistroSet.reporte == True:
                     reporte = Reporte()
                     reporte.crearHtml(listaReporte)
+        print("\n")
 
     def selectAll(self, listaAtributos):
         listaReporte = []
@@ -337,6 +340,7 @@ class ControladorEntrada:
             if RegistroSet.reporte == True:
                 reporte = Reporte()
                 reporte.crearHtml(listaReporte)
+        print()
 
     def selectExtend(self, listaAtributos, atributoComp, primeraOperacion, valorAtribComp, operacionExt, atribEx, operador, valorAtribEx):
         listaReporte = []
@@ -463,6 +467,7 @@ class ControladorEntrada:
                 if RegistroSet.reporte == True:
                     reporte = Reporte()
                     reporte.crearHtml(listaReporte)
+        print("\n")
 
     def firstComp(self, atributoComp, primeraOperacion, valorAtributoComp):
         temp = RegistroSet.listaEnUso
@@ -575,6 +580,7 @@ class ControladorEntrada:
         if RegistroSet.reporte == True:
             reporte = Reporte()
             reporte.crearHtml(listaReporte)
+        print("\n")
 
     def addColor(self, color):
         print("##########################################ADD COLOR###########################################")
@@ -633,6 +639,7 @@ class ControladorEntrada:
         else:
             print(f"El atributo {atributo} no existe.")
         print("//////////////////////////////////////////////////////////////////////////////////////////////////")
+        print("\n")
 
     def min(self, atributo):
         listaReporte = []
@@ -672,6 +679,7 @@ class ControladorEntrada:
         else:
             print(f"El atributo {atributo} no existe.")
         print("//////////////////////////////////////////////////////////////////////////////////////////////////")
+        print("\n")
 
     def sum(self, listaAtributos):
         listaReporte = []
@@ -715,6 +723,7 @@ class ControladorEntrada:
                 reporte = Reporte()
                 reporte.crearHtml(listaReporte)
         print("//////////////////////////////////////////////////////////////////////////////////////////////////")
+        print("\n")
 
     def count(self, listaAtributos):
         listaReporte = []
@@ -768,6 +777,7 @@ class ControladorEntrada:
                 reporte = Reporte()
                 reporte.crearHtml(listaReporte)
         print("//////////////////////////////////////////////////////////////////////////////////////////////////")
+        print("\n")
 
     def loadScript(self, listaDirecciones):
         carga = CargarArchivo()

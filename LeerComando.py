@@ -414,6 +414,7 @@ class LeerComando:
                             print(f"SET ---{palabraTercerNivel}--- CREADO CORRECTAMENTE")
                             print(
                                 "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                            print()
                             # print(items)
                             palabraReservada = ""
                             palabraSegundoNivel = ""
