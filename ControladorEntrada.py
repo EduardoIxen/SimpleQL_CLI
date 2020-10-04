@@ -773,3 +773,7 @@ class ControladorEntrada:
         carga = CargarArchivo()
         for item in listaDirecciones:
             carga.cargarScript(item)
+
+    def reporteToken(self):
+        repo = Reporte()
+        repo.crearHtml(RegistroSet.listaTokens)

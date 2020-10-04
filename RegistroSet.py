@@ -6,3 +6,4 @@ class RegistroSet:
     secondComp = []
     reporte = False
     nombreReporte = ""
+    listaTokens = []

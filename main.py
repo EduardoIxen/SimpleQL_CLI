@@ -54,7 +54,7 @@ def principal(op):
                         estado = 10
                     elif palabraReservada.upper() == "COUNT":
                         estado = 11
-                    elif palabraReservada.upper() == "REPORT":
+                    elif palabraReservada.upper() == "REPORT ":
                         estado = 12
                         continue
                     elif palabraReservada.upper() == "SCRIPT ":
@@ -161,11 +161,18 @@ def principal(op):
             elif estado == 12:
                 if opcion[i].isalpha():
                     palabraSegundoNivel = palabraSegundoNivel + opcion[i]
+                if opcion[i] == " " or i == len(opcion.strip()) - 1:
                     if palabraSegundoNivel.upper() == "TO":
                         estado = 32
                         palabraSegundoNivel = ""
                         RegistroSet.reporte = True
-                        continue
+                    elif palabraSegundoNivel.upper() == "TOKENS":
+                        print("report tokens")
+                        RegistroSet.nombreReporte = "Reporte tokens"
+                        control = ControladorEntrada()
+                        control.reporteToken()
+                        RegistroSet.listaTokens = []
+                        aceptado = True
             elif estado == 13:
                 if opcion[i].isalpha() or opcion[i].isdigit() or opcion[i] == "." or opcion[i] == "/" or opcion[i] == '\\' \
                         or opcion[i] == ":":

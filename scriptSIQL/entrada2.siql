@@ -54,3 +54,4 @@ report to reporte3 SELECT * WHERE atributo_numerico = 4 AND atributo_booleano = 
 report to reporte2 SELECT atributo_cadena,atributo_booleano WHERE atributo_booleano = true;
 report to reporte2 SELECT atributo_cadena,atributo_booleano WHERE atributo_booleano != true;
 report to reporte1 SELECT * WHERE atributo_booleano = false;
+report tokens;
