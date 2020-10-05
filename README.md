@@ -115,6 +115,7 @@ LIST ATTRIBUTES
 ![list](https://user-images.githubusercontent.com/18478169/95031135-79d4ea80-0671-11eb-8f81-e1a5a3f00385.png)
 
 - **PRINT IN < color >:** Permite mostrar la salida en consola del color que se le pase como parametro:
+
 | Parametro | Color |
 | --------- | ----- |
 | BLUE | Azul |
