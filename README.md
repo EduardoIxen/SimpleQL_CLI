@@ -70,10 +70,14 @@ CREATE SET prueba
 ```sh
 LOAD INTO prueba FILES ejemplo.aon, ejemplo2.aon
 ```
+![load](https://user-images.githubusercontent.com/18478169/95029648-d8489b80-0666-11eb-89fd-0ba0332a3c4e.png)
+
 - **USE SET < idSet >:** Define el set de datos para los siguientes comandos.
 ```sh
 USE SET prueba
 ```
+![use](https://user-images.githubusercontent.com/18478169/95029667-0b8b2a80-0667-11eb-9568-cf3562f56c34.png)
+
 - **SELECT atributo1, atributo2, ... WHERE < condicion >:** Permite seleccionar uno o mas registros con base a la condicion ingresada, la condicion consiste de operaciones que se le pueden aplicar a cierto atributo y puede ser: 
 
 | Signo | Descripcion |
@@ -88,6 +92,8 @@ USE SET prueba
 ```sh
 SELECT nombre, edad WHERE edad < 100
 ```
+![selectSimple](https://user-images.githubusercontent.com/18478169/95031073-1cd93480-0671-11eb-94fb-f96591c41c9e.png)
+
 Otra funcionalidad del comando SELECT es la ampliacion de la condiciones mediante los siguientes operadores logicos:
 | Operador | Descripcion |
 | -------- | ----------- |
@@ -100,10 +106,14 @@ A la ampliacion consiste en aplicarle las mismar operaciones mencionadas anterio
 ```sh
 SELECT nombre, edad WHERE nombre = "Tomas" AND edad = 31
 ```
+![selectExtend](https://user-images.githubusercontent.com/18478169/95031096-498d4c00-0671-11eb-8b61-923b1288143b.png)
+
 - **LIST ATTRIBUTES:** Este comando permite listar los atributos de los registros cargados a memoria mediante los archivos .aon.
 ```sh
 LIST ATTRIBUTES
 ```
+![list](https://user-images.githubusercontent.com/18478169/95031135-79d4ea80-0671-11eb-8f81-e1a5a3f00385.png)
+
 - **PRINT IN < color >:** Permite mostrar la salida en consola del color que se le pase como parametro:
 | Parametro | Color |
 | --------- | ----- |
@@ -114,34 +124,53 @@ LIST ATTRIBUTES
 | ORANGE | Anaranjado |
 | PINK | Rosado |
 
+![printIn](https://user-images.githubusercontent.com/18478169/95031162-a12bb780-0671-11eb-8db5-64f2fab1a0ab.png)
+
 - **MAX < atributo >:** Permite seleccionar el valor máximo del atributo que se le pase como parametro.
 ```sh
 MAX edad
 ```
+![max](https://user-images.githubusercontent.com/18478169/95031216-f8318c80-0671-11eb-865e-43c659826974.png)
+
 - **MIN < atributo >:** Permite seleccionar el valor mínimo del atributo que se le pase como parametro.
 ```sh
 MIN edad
 ```
+![min](https://user-images.githubusercontent.com/18478169/95031232-1c8d6900-0672-11eb-8e6f-9ecb3f18bc7e.png)
+
 - **SUM < atributo >:** Permite sumar todos los todos los atributos que se le pasen como parametro contenidos dentro del set de datos, solo aplica para atributos numericos.
 ```sh
 SUM edad
 ```
+![sum](https://user-images.githubusercontent.com/18478169/95031264-48105380-0672-11eb-99a9-b059316b4bba.png)
+
 - **COUNT < atributo >, < atributo2 > ... < atributoN >:** Permite contar el numero de registros o atributos cargados a memoria. Se le puede pasar varios atributos.
 ```sh
 COUNT nombre, edad
 ```
+![count](https://user-images.githubusercontent.com/18478169/95031283-6f672080-0672-11eb-8b3a-d2639a7748b0.png)
+
 - **REPORT TO < id > < comando >:** Permite generar un reporte en html con el resultado de cualquier comando mencionado anteriormente, el id que solicita como parametro es para indicarle el nombre que se le colocara al archivo.
 ```sh
 REPORT TO reporte1 SELECT * WHERE nombre = "Tomas"
 REPORT TO reporte2 SELECT nombre, edad WHERE edad = 31 AND nombre != "Pedro"
 REPORT TO reporte3 LIST ATTRIBUTES
 ```
+![report](https://user-images.githubusercontent.com/18478169/95031336-ab01ea80-0672-11eb-8868-7c99e752b8de.png)
+
+![html](https://user-images.githubusercontent.com/18478169/95031371-e13f6a00-0672-11eb-8871-6ee69c28e10c.png)
+
 - **SCRIPT < archivo.siql >, ... < archivoN.siql >:** Este comando permite cargar scripts con extensión .siql que contienen series de
 instrucciones y comandos SimpleQL. Los scripts deben de estar en la carpeta **scriptSIQL** del proyecto. Si desea cargar mas de un script, el nombre debe de ir separado por **,**.
 ```sh
 SCRIPT entrada1.siql, entrada2.siql
 ```
+![script](https://user-images.githubusercontent.com/18478169/95031421-28c5f600-0673-11eb-9f5c-b9e72f242def.png)
+
 - **REPORT TOKENS**: Este comando crea un reporte en html que muestra una lista de todos los lexemas encontrados por el AFD.
 ```SH
 REPORT TOKENS
 ```
+![tokens](https://user-images.githubusercontent.com/18478169/95031462-6296fc80-0673-11eb-8b74-40fe793a64e1.png)
+
+![tokensHtml](https://user-images.githubusercontent.com/18478169/95031516-a0942080-0673-11eb-8342-eac5888fb7ed.png)
