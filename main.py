@@ -256,13 +256,12 @@ def principal(op):
                 else:
                     if opcion[i] == "<" or opcion[i] == ">" or opcion[i] == "=" or opcion[i] == "!":
                         operacion = operacion + opcion[i]
-                        #print(operacion)
                     if contOp == 2:
-                        #print(f"{operacion} operacion de primera condicion")
                         estado = 20
                         contOp = 0
                     else:
                         contOp = contOp + 1
+
 
             elif estado == 20:
                 if opcion[i].isdigit() or opcion[i] == "-" or opcion[i] == "+":
@@ -330,7 +329,8 @@ def principal(op):
                         if palabraCuartoNivel.isdigit():
                             mandarNumero = int(palabraCuartoNivel)
                             controlador = ControladorEntrada()
-                            controlador.selectSimple(listaAtributos, palabraTercerNivel, operacion,mandarNumero)
+                            print(listaAtributos, palabraTercerNivel, operacion, mandarNumero)
+                            controlador.selectSimple(listaAtributos, palabraTercerNivel, operacion, mandarNumero)
                             palabraCuartoNivel = ""
                             listaAtributos = []
                             palabraTercerNivel = ""

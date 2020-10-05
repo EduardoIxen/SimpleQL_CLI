@@ -160,27 +160,34 @@ class ControladorEntrada:
         if operacion == "=":
             if listaAtributos[0] == "*":
                 for registro in temp:
-                    if registro.get(atributoComp) == valorAtribComp:
-                        if RegistroSet.reporte == False:
-                            print(registro)
-                        listaReporte.append(registro)
-                        print(
-                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                    if registro.get(atributoComp) != None:
+                        if registro.get(atributoComp) == valorAtribComp:
+                            if RegistroSet.reporte == False:
+                                print(registro)
+                            listaReporte.append(registro)
+                            print(
+                                "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                    else:
+                        print("No existe el atributo")
                 if RegistroSet.reporte == True:
                     reporte = Reporte()
                     reporte.crearHtml(listaReporte)
 
             else:
                 for registro in temp:
-                    if registro.get(atributoComp) == valorAtribComp:
-                        for atrib in listaAtributos:
-                            if RegistroSet.reporte == False:
-                                print(f"{atrib} : {registro.get(atrib)}")
-                            dicReporte[atrib] = registro.get(atrib)
-                        print(
-                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
-                        listaReporte.append(dicReporte)
-                        dicReporte = {}
+                    if registro.get(atributoComp) != None:
+                        if registro.get(atributoComp) == valorAtribComp:
+                            for atrib in listaAtributos:
+                                if RegistroSet.reporte == False:
+                                    print(f"{atrib} : {registro.get(atrib)}")
+                                dicReporte[atrib] = registro.get(atrib)
+                            print(
+                                "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                            listaReporte.append(dicReporte)
+                            dicReporte = {}
+                    else:
+                        print("No existe el atributo")
+
                 if RegistroSet.reporte == True:
                     reporte = Reporte()
                     reporte.crearHtml(listaReporte)
@@ -188,27 +195,33 @@ class ControladorEntrada:
         elif operacion == "!=":
             if listaAtributos[0] == "*":
                 for registro in temp:
-                    if registro.get(atributoComp) != valorAtribComp:
-                        if RegistroSet.reporte == False:
-                            print(registro)
-                        listaReporte.append(registro)
-                        print(
-                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                    if registro.get(atributoComp) != None:
+                        if registro.get(atributoComp) != valorAtribComp:
+                            if RegistroSet.reporte == False:
+                                print(registro)
+                            listaReporte.append(registro)
+                            print(
+                                "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                    else:
+                        print("No existe el atributo")
                 if RegistroSet.reporte == True:
                     reporte = Reporte()
                     reporte.crearHtml(listaReporte)
 
             else:
                 for registro in temp:
-                    if registro.get(atributoComp) != valorAtribComp:
-                        for atrib in listaAtributos:
-                            if RegistroSet.reporte == False:
-                                print(f"{atrib} : {registro.get(atrib)}")
-                            dicReporte[atrib] = registro.get(atrib)
-                        print(
-                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
-                        listaReporte.append(dicReporte)
-                        dicReporte = {}
+                    if registro.get(atributoComp) != None:
+                        if registro.get(atributoComp) != valorAtribComp:
+                            for atrib in listaAtributos:
+                                if RegistroSet.reporte == False:
+                                    print(f"{atrib} : {registro.get(atrib)}")
+                                dicReporte[atrib] = registro.get(atrib)
+                            print(
+                                "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                            listaReporte.append(dicReporte)
+                            dicReporte = {}
+                    else:
+                        print("No exixte el atributo")
                 if RegistroSet.reporte == True:
                     reporte = Reporte()
                     reporte.crearHtml(listaReporte)
@@ -216,27 +229,35 @@ class ControladorEntrada:
         elif operacion == "<":
             if listaAtributos[0] == "*":
                 for registro in temp:
-                    if registro.get(atributoComp) < valorAtribComp:
-                        if RegistroSet.reporte == False:
-                            print(registro)
-                        listaReporte.append(registro)
-                        print(
-                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                    if registro.get(atributoComp) != None:
+                        if registro.get(atributoComp) < valorAtribComp:
+                            if RegistroSet.reporte == False:
+                                print(registro)
+                            listaReporte.append(registro)
+                            print(
+                                "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                    else:
+                        print("No exixte el atributo")
                 if RegistroSet.reporte == True:
                     reporte = Reporte()
                     reporte.crearHtml(listaReporte)
 
             else:
                 for registro in temp:
-                    if registro.get(atributoComp) < valorAtribComp:
-                        for atrib in listaAtributos:
-                            if RegistroSet.reporte == False:
-                                print(f"{atrib} : {registro.get(atrib)}")
-                            dicReporte[atrib] = registro.get(atrib)
-                        print(
-                                "//////////////////////////////////////////////////////////////////////////////////////////////////")
-                        listaReporte.append(dicReporte)
-                        dicReporte = {}
+                    #print(registro.get(atributoComp), type(registro.get(atributoComp)))
+                    #print(valorAtribComp, type(registro.get(atributoComp)))
+                    if registro.get(atributoComp) != None:
+                        if registro.get(atributoComp) < valorAtribComp:
+                            for atrib in listaAtributos:
+                                if RegistroSet.reporte == False:
+                                    print(f"{atrib} : {registro.get(atrib)}")
+                                dicReporte[atrib] = registro.get(atrib)
+                            print(
+                                    "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                            listaReporte.append(dicReporte)
+                            dicReporte = {}
+                    else:
+                        print("No existe el atributo")
                     if RegistroSet.reporte == True:
                         reporte = Reporte()
                         reporte.crearHtml(listaReporte)
@@ -244,27 +265,33 @@ class ControladorEntrada:
         elif operacion == "<=":
             if listaAtributos[0] == "*":
                 for registro in temp:
-                    if registro.get(atributoComp) <= valorAtribComp:
-                        if RegistroSet.reporte == False:
-                            print(registro)
-                        listaReporte.append(registro)
-                        print(
-                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                    if registro.get(atributoComp) != None:
+                        if registro.get(atributoComp) <= valorAtribComp:
+                            if RegistroSet.reporte == False:
+                                print(registro)
+                            listaReporte.append(registro)
+                            print(
+                                "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                    else:
+                        print("No existe el atributo")
                 if RegistroSet.reporte == True:
                     reporte = Reporte()
                     reporte.crearHtml(listaReporte)
 
             else:
                 for registro in temp:
-                    if registro.get(atributoComp) <= valorAtribComp:
-                        for atrib in listaAtributos:
-                            if RegistroSet.reporte == False:
-                                print(f"{atrib} : {registro.get(atrib)}")
-                            dicReporte[atrib] = registro.get(atrib)
-                        print(
-                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
-                        listaReporte.append(dicReporte)
-                        dicReporte = {}
+                    if registro.get(atributoComp) != None:
+                        if registro.get(atributoComp) <= valorAtribComp:
+                            for atrib in listaAtributos:
+                                if RegistroSet.reporte == False:
+                                    print(f"{atrib} : {registro.get(atrib)}")
+                                dicReporte[atrib] = registro.get(atrib)
+                            print(
+                                "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                            listaReporte.append(dicReporte)
+                            dicReporte = {}
+                    else:
+                        print("No exixte el atributo")
                 if RegistroSet.reporte == True:
                     reporte = Reporte()
                     reporte.crearHtml(listaReporte)
@@ -272,27 +299,33 @@ class ControladorEntrada:
         elif operacion == ">":
             if listaAtributos[0] == "*":
                 for registro in temp:
-                    if registro.get(atributoComp) > valorAtribComp:
-                        if RegistroSet.reporte == False:
-                            print(registro)
-                        listaReporte.append(registro)
-                        print(
-                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                    if registro.get(atributoComp) != None:
+                        if registro.get(atributoComp) > valorAtribComp:
+                            if RegistroSet.reporte == False:
+                                print(registro)
+                            listaReporte.append(registro)
+                            print(
+                                "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                    else:
+                        print("No exixte el atributo")
                 if RegistroSet.reporte == True:
                     reporte = Reporte()
                     reporte.crearHtml(listaReporte)
 
             else:
                 for registro in temp:
-                    if registro.get(atributoComp) > valorAtribComp:
-                        for atrib in listaAtributos:
-                            if RegistroSet.reporte == False:
-                                print(f"{atrib} : {registro.get(atrib)}")
-                            dicReporte[atrib] = registro.get(atrib)
-                        print(
-                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
-                        listaReporte.append(dicReporte)
-                        dicReporte = {}
+                    if registro.get(atributoComp) != None:
+                        if registro.get(atributoComp) > valorAtribComp:
+                            for atrib in listaAtributos:
+                                if RegistroSet.reporte == False:
+                                    print(f"{atrib} : {registro.get(atrib)}")
+                                dicReporte[atrib] = registro.get(atrib)
+                            print(
+                                "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                            listaReporte.append(dicReporte)
+                            dicReporte = {}
+                    else:
+                        print("No exixte el atributo")
                 if RegistroSet.reporte == True:
                     reporte = Reporte()
                     reporte.crearHtml(listaReporte)
@@ -300,27 +333,33 @@ class ControladorEntrada:
         elif operacion == ">=":
             if listaAtributos[0] == "*":
                 for registro in temp:
-                    if registro.get(atributoComp) >= valorAtribComp:
-                        if RegistroSet.reporte == False:
-                            print(registro)
-                        listaReporte.append(registro)
-                        print(
-                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                    if registro.get(atributoComp) != None:
+                        if registro.get(atributoComp) >= valorAtribComp:
+                            if RegistroSet.reporte == False:
+                                print(registro)
+                            listaReporte.append(registro)
+                            print(
+                                "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                    else:
+                        print("No existe el atributo")
                 if RegistroSet.reporte == True:
                     reporte = Reporte()
                     reporte.crearHtml(listaReporte)
 
             else:
                 for registro in temp:
-                    if registro.get(atributoComp) >= valorAtribComp:
-                        for atrib in listaAtributos:
-                            if RegistroSet.reporte == False:
-                                print(f"{atrib} : {registro.get(atrib)}")
-                            dicReporte[atrib] = registro.get(atrib)
-                        print(
-                            "//////////////////////////////////////////////////////////////////////////////////////////////////")
-                        listaReporte.append(dicReporte)
-                        dicReporte = {}
+                    if registro.get(atributoComp) != None:
+                        if registro.get(atributoComp) >= valorAtribComp:
+                            for atrib in listaAtributos:
+                                if RegistroSet.reporte == False:
+                                    print(f"{atrib} : {registro.get(atrib)}")
+                                dicReporte[atrib] = registro.get(atrib)
+                            print(
+                                "//////////////////////////////////////////////////////////////////////////////////////////////////")
+                            listaReporte.append(dicReporte)
+                            dicReporte = {}
+                    else:
+                        print("No existe el atributo")
                 if RegistroSet.reporte == True:
                     reporte = Reporte()
                     reporte.crearHtml(listaReporte)
@@ -473,68 +512,104 @@ class ControladorEntrada:
         temp = RegistroSet.listaEnUso
         if primeraOperacion == "=":
             for registro in temp:
-                if registro.get(atributoComp) == valorAtributoComp:
-                    RegistroSet.firtsComp.append(registro)
-                    #print(f"firstComp--->{RegistroSet.firtsComp}")
+                if registro.get(atributoComp) != None:
+                    if registro.get(atributoComp) == valorAtributoComp:
+                        RegistroSet.firtsComp.append(registro)
+                        #print(f"firstComp--->{RegistroSet.firtsComp}")
+                else:
+                    print("No exixte el atributo")
         elif primeraOperacion == "<":
             for registro in temp:
-                if registro.get(atributoComp) < valorAtributoComp:
-                    RegistroSet.firtsComp.append(registro)
-                    #print(f"firstComp--->{RegistroSet.firtsComp}")
+                if registro.get(atributoComp) != None:
+                    if registro.get(atributoComp) < valorAtributoComp:
+                        RegistroSet.firtsComp.append(registro)
+                        #print(f"firstComp--->{RegistroSet.firtsComp}")
+                else:
+                    print("No exixte el atributo")
         elif primeraOperacion == ">":
             for registro in temp:
-                if registro.get(atributoComp) > valorAtributoComp:
-                    RegistroSet.firtsComp.append(registro)
-                    #print(f"firstComp--->{RegistroSet.firtsComp}")
+                if registro.get(atributoComp) != None:
+                    if registro.get(atributoComp) > valorAtributoComp:
+                        RegistroSet.firtsComp.append(registro)
+                        #print(f"firstComp--->{RegistroSet.firtsComp}")
+                else:
+                    print("No existe el atributo")
         elif primeraOperacion == "<=":
             for registro in temp:
-                if registro.get(atributoComp) <= valorAtributoComp:
-                    RegistroSet.firtsComp.append(registro)
-                    #print(f"firstComp--->{RegistroSet.firtsComp}")
+                if registro.get(atributoComp) != None:
+                    if registro.get(atributoComp) <= valorAtributoComp:
+                        RegistroSet.firtsComp.append(registro)
+                        #print(f"firstComp--->{RegistroSet.firtsComp}")
+                else:
+                    print("No exixte el atributo")
         elif primeraOperacion == ">=":
             for registro in temp:
-                if registro.get(atributoComp) >= valorAtributoComp:
-                    RegistroSet.firtsComp.append(registro)
-                    #print(f"firstComp--->{RegistroSet.firtsComp}")
+                if registro.get(atributoComp) != None:
+                    if registro.get(atributoComp) >= valorAtributoComp:
+                        RegistroSet.firtsComp.append(registro)
+                        #print(f"firstComp--->{RegistroSet.firtsComp}")
+                else:
+                    print("No exixte el atributo")
         elif primeraOperacion == "!=":
             for registro in temp:
-                if registro.get(atributoComp) != valorAtributoComp:
-                    RegistroSet.firtsComp.append(registro)
-                    #print(f"firstComp--->{RegistroSet.firtsComp}")
+                if registro.get(atributoComp) != None:
+                    if registro.get(atributoComp) != valorAtributoComp:
+                        RegistroSet.firtsComp.append(registro)
+                        #print(f"firstComp--->{RegistroSet.firtsComp}")
+                else:
+                    print("No exixte el atributo")
 
     def secondComp(self, atribEx, operador, valorAtribEx):
         temp = RegistroSet.listaEnUso
         if operador == "=":
             for registro in temp:
-                if registro.get(atribEx) == valorAtribEx:
-                    RegistroSet.secondComp.append(registro)
-                    #print("Second Comp", RegistroSet.secondComp)
+                if registro.get(atribEx) != None:
+                    if registro.get(atribEx) == valorAtribEx:
+                        RegistroSet.secondComp.append(registro)
+                        #print("Second Comp", RegistroSet.secondComp)
+                else:
+                    print("No exixte el atributo")
 
         elif operador == "<":
             for registro in temp:
-                if registro.get(atribEx) < valorAtribEx:
-                    RegistroSet.secondComp.append(registro)
-                    #print("Second Comp", RegistroSet.secondComp)
+                if registro.get(atribEx) != None:
+                    if registro.get(atribEx) < valorAtribEx:
+                        RegistroSet.secondComp.append(registro)
+                        #print("Second Comp", RegistroSet.secondComp)
+                else:
+                    print("No exixte el atributo")
         elif operador == ">":
             for registro in temp:
-                if registro.get(atribEx) > valorAtribEx:
-                    RegistroSet.secondComp.append(registro)
-                    #print("Second Comp", RegistroSet.secondComp)
+                if registro.get(atribEx) != None:
+                    if registro.get(atribEx) > valorAtribEx:
+                        RegistroSet.secondComp.append(registro)
+                        #print("Second Comp", RegistroSet.secondComp)
+                else:
+                    print("No exixte el atributo")
         elif operador == "<=":
             for registro in temp:
-                if registro.get(atribEx) <= valorAtribEx:
-                    RegistroSet.secondComp.append(registro)
-                    #print("Second Comp", RegistroSet.secondComp)
+                if registro.get(atribEx) != None:
+                    if registro.get(atribEx) <= valorAtribEx:
+                        RegistroSet.secondComp.append(registro)
+                        #print("Second Comp", RegistroSet.secondComp)
+                else:
+                    print("No exixte el atributo")
         elif operador == ">=":
             for registro in temp:
-                if registro.get(atribEx) >= valorAtribEx:
-                    RegistroSet.secondComp.append(registro)
-                    #print("Second Comp", RegistroSet.secondComp)
+                if registro.get(atribEx) != None:
+                    if registro.get(atribEx) >= valorAtribEx:
+                        RegistroSet.secondComp.append(registro)
+                        #print("Second Comp", RegistroSet.secondComp)
+                else:
+                    print("No exixte el atributo")
         elif operador == "!=":
             for registro in temp:
-                if registro.get(atribEx) != valorAtribEx:
-                    RegistroSet.secondComp.append(registro)
-                    #print("Second Comp", RegistroSet.secondComp)
+                if registro.get(atribEx) != None:
+                    if registro.get(atribEx) != valorAtribEx:
+                        RegistroSet.secondComp.append(registro)
+                        #print("Second Comp", RegistroSet.secondComp)
+                else:
+                    print("No exixte el atributo")
 
     def listAttributes(self):
         listaReporte = []
